@@ -1,0 +1,9 @@
+1 go to the following url
+------------------------------
+
+https://login.microsoftonline.com/common/oauth2/authorize?client_id=499b84ac-1321-427f-aa17-267ca6975798&site_id=501454&response_mode=form_post&response_type=code+id_token&redirect_uri=https%3A%2F%2Fapp.vssps.visualstudio.com%2F_signedin&nonce=d6c90835-9342-41a8-b9e2-ed2b7ec84d0b&state=nonce%3Dd6c90835-9342-41a8-b9e2-ed2b7ec84d0b%26mkt%3Den-US&resource=https%3A%2F%2Fmanagement.core.windows.net%2F&cid=d6c90835-9342-41a8-b9e2-ed2b7ec84d0b&wsucxt=1&githubsi=true&msaoauth2=true&mkt=en-US&fresh_login=1
+
+create account with existing gmail
+------------------------------------
+
+send the details

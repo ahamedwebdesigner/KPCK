@@ -1,20 +1,65 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+<%- include partials/nav.ejs %>
+<%- include partials/header.ejs %>
 
 
-    <h3>TODO:</h3>
-    <ul>
-      <li>create user button</li>
-      <li>created cuser will be blocked or allowed</li>
-      <li>list of user displayed</li>
+    <div class="container">
+      <div class="row">
+        <h4 class="pagetitle"><%= title %></h4>
+
+      </div>
+
+      <!-- <p>Welcome to <%= title %></p> -->
+  
       
-    </ul>
-  </body>
-</html>
+      <div class="row">
+        <a class="btn btn-app" style="margin-left: 0;">
+          <i class="fa fa-user-plus"></i> Create user
+        </a>
+        <a class="btn btn-app">
+          <i class="fa fa-play"></i> Play
+        </a>
+        <a class="btn btn-app">
+          <i class="fa fa-play"></i> Play
+        </a>
+        <a class="btn btn-app">
+          <i class="fa fa-play"></i> Play
+        </a>
+  </div>
+
+  <div class="row">
+    <h4 class="pagetitle">User status</h4>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
+          <th scope="col">Handle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td colspan="2">Larry the Bird</td>
+          <td>@twitter</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+    </div>
+    <!-- ---------------------------- -->
+
+    <!-- ---------------------------- -->
+    <%- include partials/footer.ejs %>

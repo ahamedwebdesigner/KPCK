@@ -1,0 +1,1 @@
+ - change log in navagation bar 

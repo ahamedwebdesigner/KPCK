@@ -1,4 +1,11 @@
-body#LoginForm{ background-image:url("https://hdwallsource.com/img/2014/9/blur-26347-27038-hd-wallpapers.jpg"); background-repeat:no-repeat; background-position:center; background-size:cover; padding:10px;}
+
+section#LoginForm{ 
+    background-image:url("https://hdwallsource.com/img/2014/9/blur-26347-27038-hd-wallpapers.jpg"); 
+    background-repeat:no-repeat;
+     background-position:center; 
+     background-size:cover; 
+   height: 100vh ;
+    }
 
 .form-heading { color:#fff; font-size:23px;}
 .panel h2{ color:#444444; font-size:18px; margin:0 0 8px 0;}
@@ -51,3 +58,35 @@ body#LoginForm{ background-image:url("https://hdwallsource.com/img/2014/9/blur-2
 }
 .back { text-align: left; margin-top:10px;}
 .back a {color: #444444; font-size: 13px;text-decoration: none;}
+
+
+/*  styles overredon */
+
+.navbar {
+
+  padding: 0;
+}
+
+
+
+.btn-app {
+  border-radius: 3px;
+  position: relative;
+  padding: 15px 5px;
+  margin: 0 0 10px 10px;
+  min-width: 80px;
+  height: 60px;
+  text-align: center;
+  color: #666;
+  border: 1px solid #ddd;
+  background-color: #f4f4f4;
+  font-size: 12px;
+}
+.btn-app>.fa, .btn-app>.glyphicon, .btn-app>.ion {
+  font-size: 20px;
+  display: block;
+}
+.pagetitle{
+  margin-top:10px;
+  margin-bottom:15px;
+}

@@ -1,0 +1,8 @@
+## 1) install express 
+
+npm install -g express-generator
+express myExpressApp --view pug
+
+
+npm install mysql -s
+npm install mysql  --save 

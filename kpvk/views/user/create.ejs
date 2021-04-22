@@ -1,0 +1,119 @@
+<%- include ../partials/header.ejs %>
+<%- include ../partials/nav.ejs %>
+    <div class="container">
+    <div class="row">
+        <h4 class="pagetitle"><%= title %></h4>
+      
+             
+    <div class="col-sm-6">
+    </div>
+    <div class="col-sm-6">
+ <!-- ---------------------------------------- -->
+ <form action="/users/save" method="POST">
+    <div class="form-group row">
+      <label for="userName" class="col-4 col-form-label">name</label> 
+      <div class="col-8">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <i class="fa fa-address-book-o"></i>
+            </div>
+          </div> 
+          <input id="userName" name="userName" placeholder="Enter User Name" type="text" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="NoOfCatels" class="col-4 col-form-label">Number of Cates</label> 
+      <div class="col-8">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <i class="fa fa-american-sign-language-interpreting"></i>
+            </div>
+          </div> 
+          <input id="NoOfCatels" name="NoOfCatels" placeholder="Number of cateles" type="text" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="MobileNumber" class="col-4 col-form-label">Mobile Number</label> 
+      <div class="col-8">
+        <input id="MobileNumber" name="MobileNumber" placeholder="Enter Mobile Number" type="text" class="form-control">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="NoOfLiters" class="col-4 col-form-label">Number of Liters</label> 
+      <div class="col-8">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <i class="fa fa-coffee"></i>
+            </div>
+          </div> 
+          <input id="NoOfLiters" name="NoOfLiters" placeholder="Number of Liters" type="text" class="form-control">
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="gender" class="col-4 col-form-label">Gender</label> 
+      <div class="col-8">
+        <select id="gender" name="gender" class="custom-select">
+          <option value="M">Male</option>
+          <option value="F">Female</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="Password" class="col-4 col-form-label">Password</label> 
+      <div class="col-8">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <i class="fa fa-braille"></i>
+            </div>
+          </div> 
+          <input id="Password" name="Password" placeholder="password " type="text" class="form-control" aria-describedby="PasswordHelpBlock">
+        </div> 
+        <span id="PasswordHelpBlock" class="form-text text-muted">Enter default password for user</span>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="Address" class="col-4 col-form-label">Address</label> 
+      <div class="col-8">
+        <textarea id="Address" name="Address" cols="40" rows="5" class="form-control" aria-describedby="AddressHelpBlock"></textarea> 
+        <span id="AddressHelpBlock" class="form-text text-muted">Enter address</span>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="VillageName" class="col-4 col-form-label">Village Name</label> 
+      <div class="col-8">
+        <input id="VillageName" name="VillageName" placeholder="Enter village name" type="text" class="form-control">
+      </div>
+    </div> 
+
+    <div class="form-group row">
+        <label for="UserType" class="col-4 col-form-label">User Type</label> 
+        <div class="col-8">
+          <select id="UserType" name="UserType" aria-describedby="UserTypeHelpBlock" class="custom-select">
+            <option value="pom">POM</option>
+            <option value="general">GENERAL</option>
+            <option value="admin">ADMIN</option>
+          </select> 
+          <span id="UserTypeHelpBlock" class="form-text text-muted">Which type of user you want to create</span>
+        </div>
+      </div>
+
+
+    <div class="form-group row">
+      <div class="offset-4 col-8">
+        <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </form>
+<!-- ---------------------------------------- -->
+    </div>
+       
+    </div>
+    </div>
+<%- include ../partials/footer.ejs %>

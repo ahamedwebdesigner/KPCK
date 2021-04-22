@@ -10,13 +10,13 @@ router.get('/create', function(req, res, next) {
 
  
 
-  db.query('SELECT 1 + 1 AS result', function (error, results, fields) {
-    if (error) throw error;
-    console.log(results[0].result);
-  });
+db.query('SELECT 1 + 1 AS result', function (error, results, fields) {
+  if (error) throw error;
+  console.log(results[0].result);
+});
 
 
-  res.render('user/create',  { 
+res.render('user/create',  { 
     appname: appData.appName,
     title: appData.userCreate.pagetitle,
     desc:appData.userCreate.pageDesc,

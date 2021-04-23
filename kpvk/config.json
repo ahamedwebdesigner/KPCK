@@ -1,0 +1,22 @@
+{
+    "appdata":{ 
+        "applicationName":"KPVK",
+        "appDiscription":"portal for Kalyandurgam pala vikraya kendram"
+    },
+    "database_prod": {
+
+        "host": "localhost",
+        "port": 3306,
+        "user":"KPVK_test",
+        "password": "123456",
+        "database": "KPVK_test"
+    },
+    "database_test": {
+
+        "host": "localhost",
+        "port": 3306,
+        "user":"KPVK_test",
+        "password": "123456",
+        "database": "KPVK_test"
+    }
+}

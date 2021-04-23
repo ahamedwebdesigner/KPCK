@@ -83,6 +83,8 @@ function onError(error) {
 
 function onListening() {
 
+
+
   // create databases requered for running this application
 
   var create_user_table_sql = `
@@ -109,14 +111,15 @@ var insertinto_user_values=[
   ['PomAdmin','*6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9','9538666004','male','marrama temple street ','Kalyandurgam',true,'now()'],
 ]
 
-// db.query(drop_user_table_sql, function (err, result) {  
-//   if (err) throw err;  
-//       console.log("==========================#sql:query excuited======================");
-//       console.log(drop_user_table_sql);
-//       console.log("==========================#sql:query excuited======================");
-// });  
 
 
+  
+db.query(drop_user_table_sql, function (err, result) {  
+  if (err) throw err;  
+      console.log("==========================#sql:query excuited======================");
+      console.log(drop_user_table_sql);
+      console.log("==========================#sql:query excuited======================");
+});  
 
 
 db.query(create_user_table_sql, function (err, result) {  

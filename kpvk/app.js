@@ -4,13 +4,17 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var config = require('./config.json');
+global.config = config;
+
+const { host, port, user, password, database } = config.database_test;
 
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'KPVK_test',
-  password : '123456',
-  database : 'KPVK_test'
+  host     : host,
+  user     : user,
+  password : password,
+  database : database
 });
 connection.connect();
 global.db = connection;
@@ -29,6 +33,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+
+
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

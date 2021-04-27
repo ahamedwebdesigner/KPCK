@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 const session = require('express-session');
-
+var MySQLStore = require('express-mysql-session')(session);
 
 var logger = require('morgan');
 
@@ -12,15 +12,22 @@ global.config = config;
 
 const { host, port, user, password, database } = config.database_test;
 
-var mysql      = require('mysql');
-var connection = mysql.createConnection({
+var options ={
   host     : host,
   user     : user,
   password : password,
   database : database
-});
+};
+
+
+var mysql      = require('mysql');
+var connection = mysql.createConnection(options);
 connection.connect();
 global.db = connection;
+
+var sessionStore = new MySQLStore(options);
+
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -35,9 +42,19 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+// app.use(session({
+//   'secret': '343ji43j4n3jn4jk3n'
+// }));
+
 app.use(session({
-  'secret': '343ji43j4n3jn4jk3n'
-}))
+	key: 'KPVK_SID',
+	secret: 'session_cookie_secret',
+	store: sessionStore,
+	resave: false,
+	saveUninitialized: false
+}));
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 

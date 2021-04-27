@@ -102,7 +102,7 @@ function onListening() {
     updated_at TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
 )  ENGINE=INNODB;`;
 
-var drop_user_table_sql =`drop table user`;
+var drop_user_table_sql =`drop table IF  EXISTS user`;
 
 
 var insertinto_user_table_sql =`INSERT INTO user(user_name,user_password,mobile_number,gender,address,village,user_status,doj)VALUES ?`;

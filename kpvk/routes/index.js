@@ -60,7 +60,7 @@ router.get('/cookieclear', function(req, res) {
 // post routes
 
 router.get('/setsession', function(req, res) {  
-  req.session.name = 'Arshiya'
+  req.session.name = 'Arshiya';
   req.session.count = 0;
   res.status(200).send('set session called');  // sending
 }); 

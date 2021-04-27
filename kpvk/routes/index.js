@@ -59,6 +59,35 @@ router.get('/cookieclear', function(req, res) {
 
 // post routes
 
+router.get('/setsession', function(req, res) {  
+  req.session.name = 'Arshiya'
+  req.session.count = 0;
+  res.status(200).send('set session called');  // sending
+}); 
+
+router.get('/getsession', function(req, res) {  
+  req.session.count++;
+  res.status(200).send(req.session);  // sending
+}); 
+
+
+// redirect
+
+router.get('/redirecteg1', function(req, res) {  
+ 
+  // if res.settion.user.logedinstatus== false
+  //res.redirect('/getsession');
+  //res.redirect('http://skillsandwills.com')
+  //res.redirect(301, 'http://skillsandwills.com')
+}); 
+
+
+router.get('/headers', function(req, res) {  
+ 
+
+  res.header("x-message","hellow all");
+  res.send('<p>some html</p>')
+}); 
 
 
 

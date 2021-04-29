@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var appData = require('../lang/en.js');
+const bcrypt = require('bcryptjs');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -90,6 +91,46 @@ router.get('/headers', function(req, res) {
 }); 
 
 
+
+// about bcript
+
+router.get('/bcript', function(req, res) {  
+ 
+
+  
+
+  // bcrypt.compare("123456",'$2a$12$yImZBtgKfLddaWx5v3TH8OJiVv6W0nQtAWcQ9ff9/SA7wbVGSWsi6').then(result =>{
+
+  //   console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+  //   console.log(result)
+  //   console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+  // })
+
+  // bcrypt.hash("123456", 12).then((hash_pass) => {
+  //     res.send(hash_pass)
+  // });
+ 
+}); 
+
+
+// middle ware
+
+const middlewareg = (req, res, next) => {
+
+  // user is loged is or not if not logedin i will redirect to login page
+    console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+    console.log("middle ware function is called")
+    console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+  next();
+}
+
+
+router.get('/middleware',middlewareg, function(req, res) {  
+  console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+  console.log("route  is called")
+  console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+  res.send("From Middle ware");
+});
 
 
 module.exports = router;

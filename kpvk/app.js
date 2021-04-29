@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 const session = require('express-session');
+var bodyParser = require('body-parser')
 var MySQLStore = require('express-mysql-session')(session);
 
 var logger = require('morgan');
@@ -39,9 +40,18 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+
 app.use(cookieParser());
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+})); 
+
+
+
 // app.use(session({
 //   'secret': '343ji43j4n3jn4jk3n'
 // }));

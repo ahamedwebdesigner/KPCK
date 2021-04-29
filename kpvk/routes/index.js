@@ -3,6 +3,14 @@ var router = express.Router();
 var appData = require('../lang/en.js');
 const bcrypt = require('bcryptjs');
 
+const ifNotLoggedin = (req, res, next) => {
+  if(!req.session.isLoggedIn){
+      return res.redirect('/');
+  }
+  next();
+}
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
@@ -16,7 +24,7 @@ router.get('/', function(req, res, next) {
 
                        });
 });
-router.get('/super-admin', function(req, res, next) {
+router.get('/super-admin',ifNotLoggedin, function(req, res, next) {
   res.render('super-admin', { title: 'Welcome to super admin' });
 });
 

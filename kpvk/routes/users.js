@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var appData = require('../lang/en.js');
-
+//const bcrypt = require('bcryptjs');
 
 
 /* GET users listing. */
@@ -36,4 +36,20 @@ router.post('/save',function(req, res, next){
   res.send("user data saved");
 
 })
+
+
+router.post('/login',function(req, res, next){
+  const  backURL=req.header('Referer') || '/';
+  if(req.body.email =="mustaq@gmail.com" && req.body.password=="123456"){
+    req.session.isLoggedIn=true;
+    // do your thang
+    res.redirect(backURL);
+  }
+
+
+  res.send("user data saved");
+
+})
+
+
 module.exports = router;

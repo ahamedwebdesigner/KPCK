@@ -96,8 +96,12 @@ function onListening() {
     gender SET('male','female','other'),
     address VARCHAR(255) NOT NULL,
     village VARCHAR(255) NOT NULL,
-	  user_status BOOLEAN,
-    doj DATETIME,
+    user_status BOOLEAN,
+     doj DATETIME,
+     NoOfCatels INT null,
+     NoOfLiters INT null,
+     
+     UserType  VARCHAR(255) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP
 )  ENGINE=INNODB;`;
@@ -105,10 +109,10 @@ function onListening() {
 var drop_user_table_sql =`drop table IF  EXISTS user`;
 
 
-var insertinto_user_table_sql =`INSERT INTO user(user_name,user_password,mobile_number,gender,address,village,user_status,doj)VALUES ?`;
+var insertinto_user_table_sql =`INSERT INTO user(user_name,user_password,mobile_number,gender,address,village,user_status,doj,NoOfCatels,NoOfLiters,UserType)VALUES ?`;
 var insertinto_user_values=[
-  ['admin','*6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9','9966244689','male','marrama temple street ','Kalyandurgam',true,'now()'],
-  ['PomAdmin','*6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9','9538666004','male','marrama temple street ','Kalyandurgam',true,'now()'],
+  ['admin','$2a$12$50.MTQBw3XtEaR/Rigb0/epgV0CL5GusRIuY/2HSsYBDFShmH7unS','9966244689','male','marrama temple street ','Kalyandurgam',true,'now()',5,50,'ADMIN'],
+  ['PomAdmin','$2a$12$50.MTQBw3XtEaR/Rigb0/epgV0CL5GusRIuY/2HSsYBDFShmH7unS','9538666004','male','marrama temple street ','Kalyandurgam',true,'now()',10,100,'POM'],
 ]
 
 

@@ -107,17 +107,19 @@ router.get('/bcript', function(req, res) {
 
   
 
-  // bcrypt.compare("123456",'$2a$12$yImZBtgKfLddaWx5v3TH8OJiVv6W0nQtAWcQ9ff9/SA7wbVGSWsi6').then(result =>{
+  bcrypt.compare("123456",'$2a$12$50.MTQBw3XtEaR/Rigb0/epgV0CL5GusRIuY/2HSsYBDFShmH7unS').then(result =>{
 
-  //   console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-  //   console.log(result)
-  //   console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-  // })
+    console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+    console.log(result)
+    console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+  });
 
   // bcrypt.hash("123456", 12).then((hash_pass) => {
-  //     res.send(hash_pass)
+  //   console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+  //   console.log(hash_pass)
+  //   console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
   // });
- 
+ res.status(200).send("password generated successefully"); 
 }); 
 
 

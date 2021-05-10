@@ -7,6 +7,9 @@ module.exports = {
     userCreate:{
         pagetitle:"Create User",
         pageDesc:"Enter verefied details of user "
+    },
+    listofUsers:{
+        pagetitle:"List of all users",
+        pageDesc:"List of all users in KPVK "
     }
-
 };

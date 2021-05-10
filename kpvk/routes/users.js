@@ -4,6 +4,38 @@ var appData = require('../lang/en.js');
 const bcrypt = require('bcryptjs');
 
 
+
+
+
+
+router.get('/all',helpers.ifNotLoggedin,(req, res, next)=>{
+
+
+  var sql = "select * from user"; 
+  db.query(sql, (err, rows) => {
+
+    if (err){
+        
+      res.send( err.message);
+      return;
+    }
+
+
+    var pagedata= { 
+      appname: appData.appName,
+      title: appData.listofUsers.pagetitle,
+      desc:appData.listofUsers.pageDesc,
+      logintxt: appData.listofUsers.pagetitle,
+      loginformdesc: "Please enter your email and password",
+      userdata:rows
+  
+     };
+    res.render('user/all',pagedata );
+
+  });
+
+
+})
 /* GET users listing. */
 router.get('/create', function(req, res, next) {
 
@@ -31,35 +63,53 @@ res.render('user/create',  {
    });
 });
 
-router.post('/create', function(req, res, next) {
-
-  console.log("===============================");
-  console.log(req.body);
-  console.log("===============================");
 
 
-bcrypt.hash(req.body.user_password, 12).then((hash_pass)=>{
-  console.log("===============================");
-  console.log(hash_pass);
-  console.log("===============================");
+// router.post('/create', function(req, res, next) {
 
-  var sql ='INSERT INTO user (user_name,user_password,mobile_number,gender,address,village,user_status,doj,NoOfCatels,NoOfLiters,UserType) VALUES (?,?,?,?,?,?,?,?,?,?,?)';
-var params =[req.body.user_name,hash_pass,req.body.mobile_number,req.body.gender,req.body.Address, req.body.village,1,'now()',req.body.NoOfCatels,req.body.NoOfLiters,req.body.UserType];
+//   console.log("===============================");
+//   console.log(req.body);
+//   console.log("===============================");
 
-db.query(sql, params,(err, result) =>{
-  if (err){
-    // res.status(400).json({"error": err.message})
-    res.send('Error occured : '+ err.message);
-    return;
-  }
-  res.send('user data submited with successefully');
-  });
+
+// bcrypt.hash(req.body.user_password, 12).then((hash_pass)=>{
+//   console.log("===============================");
+//   console.log(hash_pass);
+//   console.log("===============================");
+
+//   var sql ='INSERT INTO user (user_name,user_password,mobile_number,gender,address,village,user_status,doj,NoOfCatels,NoOfLiters,UserType) VALUES (?,?,?,?,?,?,?,?,?,?,?)';
+// var params =[req.body.user_name,hash_pass,req.body.mobile_number,req.body.gender,req.body.Address, req.body.village,1,'now()',req.body.NoOfCatels,req.body.NoOfLiters,req.body.UserType];
+
+// db.query(sql, params,(err, result) =>{
+//   if (err){
+//     // res.status(400).json({"error": err.message})
+//     res.send('Error occured : '+ err.message);
+//     return;
+//   }
+//   res.send('user data submited with successefully');
+//   });
+// })
+
+
+
+
+// });
+
+router.post('/create', function(req,res,next){
+  bcrypt.hash(req.body.user_password, 12).then((hash_pass)=>{
+    var sql ='INSERT INTO user (user_name,user_password,mobile_number,gender,address,village,user_status,doj,NoOfCatels,NoOfLiters,UserType) VALUES (?,?,?,?,?,?,?,?,?,?,?)';
+     var params =[req.body.user_name,hash_pass,req.body.mobile_number,req.body.gender,req.body.Address, req.body.village,1,'now()',req.body.NoOfCatels,req.body.NoOfLiters,req.body.UserType];
+    db.query(sql, params,(err, result) =>{
+        if (err){
+        
+          res.send( err.message);
+          return;
+        }
+        res.send('user data submited with successefully');
+        });
+      })
+  
 })
-
-
-
-
-});
 
 
 

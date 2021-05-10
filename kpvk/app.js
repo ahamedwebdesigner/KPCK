@@ -3,8 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 const session = require('express-session');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 var MySQLStore = require('express-mysql-session')(session);
+var helpersFunctions = require("./helpers");
 
 var logger = require('morgan');
 
@@ -25,6 +26,13 @@ var mysql      = require('mysql');
 var connection = mysql.createConnection(options);
 connection.connect();
 global.db = connection;
+
+
+global.helpers = helpersFunctions;
+
+
+
+
 
 var sessionStore = new MySQLStore(options);
 

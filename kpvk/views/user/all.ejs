@@ -1,0 +1,48 @@
+<%- include ../partials/header.ejs %>
+<%- include ../partials/nav.ejs %>
+    <div class="container">
+    <div class="row">
+        <h4 class="pagetitle"><%= title %></h4>
+      
+             
+
+    <div class="col-sm-12">
+ <!-- ---------------------------------------- -->
+ 
+ <!-- <%- JSON.stringify(userdata) %> -->
+
+ <% if(userdata){ %>
+  
+    
+    <table class="table">
+
+        <tr>
+            <th>ID</th>
+            <th> Name</th>
+            <th> Mobile Number</th>
+            <th> Address</th>
+            <th> village</th>
+        </tr>
+        <% for(var i=0; i<userdata.length; i++) {%>
+            <tr>
+                <td><%= userdata[i].id %></td>
+                <td><%= userdata[i].user_name %></td>
+                <td><%= userdata[i].mobile_number %></td>
+                <td><%= userdata[i].address %></td>
+                <td><%= userdata[i].village %></td>
+             
+           
+            </tr>
+        <% } %>
+
+    </table>
+
+
+<% } %>
+
+<!-- ---------------------------------------- -->
+    </div>
+       
+    </div>
+    </div>
+<%- include ../partials/footer.ejs %>

@@ -12,6 +12,37 @@
     function init(){
     
 
+
+  function PromisGenerator(name,responseType,nSec){
+    return new Promise((resolve,reject)=>{
+      setTimeout(()=>{
+          if(responseType){
+            resolve( name.toLocaleUpperCase());    
+          }else{
+            //  reject(new Error('Something is not right!'));
+            reject("this is rejuct data");
+          }
+         },1000*nSec) ;
+    });
+  }
+  
+  function consumenr(){
+
+    let musPromis = PromisGenerator("Mustaq",true,5);
+    let ArsPromis = PromisGenerator("Arshiya",false,3);
+
+    Promise.race([musPromis, ArsPromis]).then(
+        (values) => { console.log(values)}, // called wen all the promises resolved
+        (error) => { console.log(error)}
+    );
+
+
+  
+  }
+  consumenr();
+
+
+
     }
 </script>
 

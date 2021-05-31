@@ -25,40 +25,41 @@ promise.then((result)=>{
 
 
 // prob1: cont access async valur 
-function someAsyncFunction(name){
-    setTimeout(()=>{
-      return  name.toLocaleUpperCase()
-    },3000) ;
-}
+    function someAsyncFunction(name){
+        setTimeout(()=>{
+        return  name.toLocaleUpperCase()
+        },3000) ;
+    }
 
 
-function consumenr(){
-    let getGetName = someAsyncFunction("Mustaq");
-    console.log(getGetName);
-}
-consumenr();
+    function consumenr(){
+        let getGetName = someAsyncFunction("Mustaq");
+        console.log(getGetName);
+    }
+    consumenr();
+
 
 //solution 
 
 
-function someAsyncFunction(name){
-  return new Promise((res,reg)=>{
-    setTimeout(()=>{
-        res( name.toLocaleUpperCase());
-      },3000) ;
-  });
-}
+    function someAsyncFunction(name){
+    return new Promise((res,reg)=>{
+        setTimeout(()=>{
+            res( name.toLocaleUpperCase());
+        },3000) ;
+    });
+    }
 
-function consumenr(){
-    let getGetName = someAsyncFunction("Mustaq");
+    function consumenr(){
+        let getGetName = someAsyncFunction("Mustaq");
 
-    getGetName.then(
-        (result)=>{ console.log(result)},
-        (error)=>{console.log(error)},
-    );
+        getGetName.then(
+            (result)=>{ console.log(result)},
+            (error)=>{console.log(error)},
+        );
 
-}
-consumenr();
+    }
+    consumenr();
 
 
 // 3. states of promis

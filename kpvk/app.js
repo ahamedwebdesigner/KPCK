@@ -13,7 +13,6 @@ var config = require('./config.json');
 global.config = config;
 
 const { host, port, user, password, database } = config.database_test;
-
 var options ={
   host     : host,
   user     : user,
@@ -40,6 +39,9 @@ var sessionStore = new MySQLStore(options);
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var setupRouter = require('./routes/setup');
+var ormRouter = require('./routes/orm');
+var ajaxRouter = require('./routes/ajax');
 
 var app = express();
 
@@ -82,6 +84,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/setup', setupRouter);
+app.use('/orm', ormRouter);
+app.use('/ajax', ajaxRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

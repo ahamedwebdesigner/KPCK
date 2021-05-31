@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var appData = require('../lang/en.js');
 const bcrypt = require('bcryptjs');
-
+let MongoClient = require('mongodb').MongoClient;
 
 
 /* GET home page. */
@@ -148,6 +148,54 @@ router.get('/middleware',middlewareg, function(req, res) {
   console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
   res.send("From Middle ware");
 });
+
+
+router.get('/mongo', function(req, res) {  
+  let mungourl = 'mongodb+srv://kdpvk_db_user:mOtWSRqQsrsc3dLI@kpvk.npdza.mongodb.net/KDPVK?retryWrites=true&w=majority';
+
+  MongoClient.connect(mungourl, function(err, db) {
+    if (err) throw err;
+    console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+    var dbo = db.db("products");
+    
+    dbo.collection("items").insertOne({ name:"facewash",price: 30},(err, result)=>{
+      if (err) throw err;
+            res.json(result);
+            db.close();
+    });
+    console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+  });
+
+ 
+});
+
+
+
+
+router.get('/ajaxeg', function(req, res, next) {
+
+  var userData = [
+    { name: 'Sammy', organization: "DigitalOcean", birth_year: 2012},
+    { name: 'Tux', organization: "Linux", birth_year: 1996},
+    { name: 'Moby Dock', organization: "Docker", birth_year: 2013}
+  ];
+
+
+  res.render('promis-ajax', { 
+                        appname: appData.appName,
+                        title: appData.loginPage.pagetitle,
+                        desc:appData.loginPage.pageDesc,
+                        logintxt: appData.loginPage.pagetitle,
+                        loginformdesc: "Please enter your email and password",
+                        data_url:"/getdata",
+                        userData: userData,
+
+                       });
+});
+router.get('/getdata', function(req, res, next) {
+  res.json({ name: "Mustaq" });
+});
+
 
 
 module.exports = router;

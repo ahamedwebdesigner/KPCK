@@ -1,0 +1,107 @@
+<%- include partials/header.ejs %>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 " style=" text-align:center;height: 50px; background-color: #eee;" >
+                <button id="getUsers" type="button" class="btn btn-primary" style="vertical-align: middle;">makeAjaxCall</button>
+             </div>
+        </div>
+
+        <div id="stage" style="height:100px; background-color: #deee12;"></div>
+
+    </div>
+
+
+   
+<!-- footer.ejs -->
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    // window.addEventListener('load', function(){
+    //     alert('<%= data_url %>');
+    // });
+
+    // var userData = '<%- JSON.stringify(userData) %>  ';
+    // var appData = {
+    //   UserData: JSON.parse(userData),
+    // }
+
+ 
+    function MakePromis(sec,completed,RdsolveValue){
+    return new Promise(function (resolve, reject) {
+        setTimeout(() => {
+            if (completed) {
+                resolve(RdsolveValue);
+            } else {
+                reject("Promis failed");
+            }
+        }, sec* 1000);
+    });
+}
+
+console.log("start :---------------------------------------");
+let promis1 = MakePromis(2,true,'First promis resolved');
+let promis2 = MakePromis(2,true,'Second promis resolved');
+let promis3 = MakePromis(10,true,'Third promis resolved');
+
+
+
+// promis1
+// .then(success => console.log(success))
+// .catch(reason => console.log(reason))
+// .finally(() => console.log("promis1 finally called "));
+
+
+// Promise.all([promis1, promis2, promis3]).then(result => {
+//     console.log({result});
+// }).catch(error => {
+//     console.log('An Error Occured');
+// });
+
+
+//This method doesn't wait for all the promises to resolve. It is done when any one of the promises is settled.
+// Promise.any([promis1, promis2, promis3]).then(result => {
+//     console.log({result});
+// }).catch(error => {
+//     console.log('An Error Occured');
+// }).catch(error => {
+//     console.log('An Error Occured');
+// });
+
+
+
+
+//This method waits for all promises to settle(resolve/reject) and returns their results as an array of objects. 
+//The results will contain a state (fulfilled/rejected) and value, if fulfilled
+
+// Promise.allSettled([promis1, promis2, promis3]).then(result => {
+//     console.log({result});
+// }).catch(error => {
+//     console.log('An Error Occured');
+// }).catch(error => {
+//     console.log('An Error Occured');
+// });
+
+
+//It waits for the first (quickest) promise to settle, and returns the result/error accordingly
+
+Promise.race([promis1, promis2, promis3]).then(result => {
+    console.log({result});
+}).catch(error => {
+    console.log('An Error Occured');
+}).catch(error => {
+    console.log('An Error Occured');
+});
+
+console.log("stop :---------------------------------------"); 
+</script>
+
+
+</body>
+</html>
+
+

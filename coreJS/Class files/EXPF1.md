@@ -144,12 +144,14 @@ This means that we will be able to inspect the state and result property values 
     // resolve promis
     let resolvePromise = new Promise(function(resolve, reject) {
         resolve("I am done");
+
     });
 
     // reject promiss
 
     let rejectPromise = new Promise(function(resolve, reject) {
         reject(new Error('Something is not right!'));
+
     });
 
     console.log(resolvePromise);

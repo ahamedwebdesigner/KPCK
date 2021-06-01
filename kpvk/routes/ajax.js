@@ -12,3 +12,12 @@ router.get('/', function(req, res, next) {
     desc:"appData.loginPage.pageDesc",
    });
 });
+
+
+
+router.get('/getName', function(req, res, next) {
+        res.send("Mustaq");
+        
+});
+
+//    console.log(req.query.name);

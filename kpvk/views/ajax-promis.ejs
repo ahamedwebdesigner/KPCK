@@ -1,6 +1,14 @@
 <%- include partials/header.ejs %>
-<h1>hellow</h1>
 
+
+<div class="jumbotron">
+    <div class="container">
+        <button class="btn btn-primary btn-lg" id="LoadNameBtn">Load User Details</button>
+      
+      <h1 class="display-3" id="display-name-div"></h1>
+
+    </div>
+  </div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -10,40 +18,32 @@
 <script>
     window.addEventListener('load',init);
     function init(){
-    
 
+        // 1) selection buttion and place hoder to update result form server
+        var loadDetailsBtn = document.getElementById('LoadNameBtn');
+        var detailsPlace = document.getElementById('display-name-div');
 
-  function PromisGenerator(name,responseType,nSec){
-    return new Promise((resolve,reject)=>{
-      setTimeout(()=>{
-          if(responseType){
-            resolve( name.toLocaleUpperCase());    
-          }else{
-            //  reject(new Error('Something is not right!'));
-            reject("this is rejuct data");
-          }
-         },1000*nSec) ;
-    });
-  }
-  
-  function consumenr(){
+        //  2) creating xmlhttp request
+        const XmlHttprequestObj = new XMLHttpRequest();
+        XmlHttprequestObj.onreadystatechange = function (e) {
+            if (this.readyState === 4) {
+                if (this.status == 200) {
+                // 4) if all is well update respone in place holder
+                  detailsPlace.innerHTML = XmlHttprequestObj.responseText;
+                } else {
+                    console.log("Error Occured");
+                }
+            }
+        }
+      
 
-    let musPromis = PromisGenerator("Mustaq",true,5);
-    let ArsPromis = PromisGenerator("Arshiya",false,3);
+        // 3) add event listner to button
+        loadDetailsBtn.addEventListener("click",(e)=>{
+            XmlHttprequestObj.open("GET", '/ajax/getName'+"?name=Mustaq", true);
+            XmlHttprequestObj.send();
+        });
 
-    Promise.race([musPromis, ArsPromis]).then(
-        (values) => { console.log(values)}, // called wen all the promises resolved
-        (error) => { console.log(error)}
-    );
-
-
-  
-  }
-  consumenr();
-
-
-
-    }
+     }
 </script>
 
 </body>

@@ -16,8 +16,21 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/getName', function(req, res, next) {
-        res.send("Mustaq");
+    setTimeout(()=>res.send("Mustaq"),3000) ;
         
 });
 
-//    console.log(req.query.name);
+router.get('/getModifiedName', function(req, res, next) {
+    console.log(req.query.name);
+    setTimeout(()=>res.send(req.query.name.toLocaleUpperCase()),3000) ;
+    
+        
+});
+
+router.get('/getMessage', function(req, res, next) {
+    console.log(req.query.name);
+    setTimeout(()=>res.send("Hello "+req.query.name+" welcome to new world of development"),3000) ;
+    
+        
+});
+//    

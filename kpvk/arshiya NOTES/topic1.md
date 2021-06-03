@@ -97,8 +97,7 @@ promise.then((result)=>{
 
 
 // inspecting promiss in node evnirement
-
-
+ 
     util = require('util');
     var promise1 = new Promise (function (resolve) {});
     var promise2 = new Promise (function (resolve) {resolve ('this is value');});
@@ -109,6 +108,10 @@ promise.then((result)=>{
     // console.log(util.inspect (promise3)); 
 
 
+
+[0, ] for pending,
+ [1, /* value */] for fulfilled,
+  [2, /* value */] for rejected.
 
     // console.log(process.binding('util').getPromiseDetails(promise1));
     // console.log(process.binding('util').getPromiseDetails(promise2));

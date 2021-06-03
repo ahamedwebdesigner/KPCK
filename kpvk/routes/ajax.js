@@ -2,10 +2,19 @@ var express = require('express');
 var router = express.Router();
 
 
-module.exports = router;
 
 
 router.get('/', function(req, res, next) {
+
+    import { setTimeout } from 'timers/promises';
+
+(async () => {
+  const result = await setTimeout(2000, 'resolved')
+  // Executed after 2 seconds
+  console.log(result); // "resolved"
+})()
+
+
  res.render('ajax-promis', { 
     appname: "appData.appName",
     title: "appData.loginPage.pagetitle",
@@ -34,3 +43,6 @@ router.get('/getMessage', function(req, res, next) {
         
 });
 //    
+
+
+module.exports = router;

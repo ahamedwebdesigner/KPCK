@@ -32,4 +32,10 @@ async function f() {
   
   f();
 
-  //
+
+### Async a waite topic three
+
+await new Promise(resolve => setTimeout(resolve, 1000));
+await new Promise(resolve => setTimeout(() => { resolve({ data: 'your return data'}) }, 1000));
+
+

@@ -18,9 +18,6 @@ var storage = multer.diskStorage({
 
 
 router.get('/', function(req, res, next) {
-
-
-
  res.render('ajax-promis', { 
     appname: "appData.appName",
     title: "appData.loginPage.pagetitle",
@@ -56,10 +53,10 @@ router.get('/getMessage', function(req, res, next) {
 
 
 router.get('/getJson', function(req, res, next) {
-   // res.json({ user: 'Mustaq Ahamed' });
-   return res.status(400).send({
-        message: 'This is an error!'
-    }); 
+   res.json({ user: 'Mustaq Ahamed' });
+//    return res.status(400).send({
+//         message: 'This is an error!'
+//     }); 
             
 });
 
@@ -67,7 +64,7 @@ router.get('/getJson', function(req, res, next) {
 router.post('/postjson', function(req, res, next) {
 
     console.log("---------------------------------");
-    // console.log(req.body);
+    console.log(req.body);
     // console.log((req.headers));
     console.log((req.headers['x-authantication-key']));
     console.log("---------------------------------");

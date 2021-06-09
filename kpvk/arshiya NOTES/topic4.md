@@ -13,6 +13,17 @@ const fetch = require("node-fetch");
     .then(data => console.log(data));
 
 
+    /*
+    let resp = fetch('http://localhost:3000/ajax/getjson') ;
+    console.log("1)"+ resp);  // pending 
+    resp.then(response =>{
+        console.log("2)"+response.json())
+    })
+
+    console.log("3)"+resp);
+
+    */
+
 ## using fetch APi error handling 
 
     fetch('http://localhost:3000/ajax/getjson')
@@ -52,9 +63,42 @@ const fetch = require("node-fetch");
 
         asyncGetCall()
 
+- using fetch api with error handling 
+
+        const asyncGetCall = async () => {
+            try {
+                const response = await fetch('http://localhost:3000/ajax/getjson');
+                if(response.status== 200 && response.statusText == 'OK' ){
+                    const data = await response.json();
+                    console.log(data);
+                }else{
+                    throw new Error( response.statusText);
+                }
+            } catch(error) {
+            // enter your logic for when there is an error (ex. error toast)
+                console.log(error)
+            } 
+        }
+        asyncGetCall()
 
 
 ## making post request using fetch
+        const rawResponse =  fetch('http://localhost:3000/ajax/postjson', {
+            method: 'POST',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({name: "mustaq",wife: 'Arshiya Ahamed'})
+        }).then(res => res.json())
+        .then(data => {
+            console.log(data)
+        })
+        .catch(error => {
+            console.log(error)
+        })
+
+- using await syntax
 
         (async () => {
         const rawResponse = await fetch('http://localhost:3000/ajax/postjson', {
@@ -94,9 +138,9 @@ const fetch = require("node-fetch");
         const rawResponse = await fetch('http://localhost:3000/ajax/postjson', {
                  method: 'POST',
                  headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'x-authantication-key':"abcdefslhlkj6uwyew8e775656"
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'x-authantication-key':"abcdefslhlkj6uwyew8e775656"
                 },
                 body: JSON.stringify({name: "mustaq",wife: 'Arshiya Ahamed'})
             });
@@ -109,7 +153,8 @@ const fetch = require("node-fetch");
 ## Using custom header object
 
 
-
+- note: Headers object is not present in node envirnment
+- it is only present in brouser envirnment
     
         const myHeaders = new Headers();
         myHeaders.append('Content-Type', 'application/json');
@@ -157,6 +202,7 @@ const fetch = require("node-fetch");
             console.log(content);
         })();
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ## Referance to the fetch objecct 
 - referance to all the possieble alus in fetch 

@@ -202,7 +202,7 @@ const fetch = require("node-fetch");
             console.log(content);
         })();
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 ## Referance to the fetch objecct 
 - referance to all the possieble alus in fetch 
@@ -239,7 +239,90 @@ const fetch = require("node-fetch");
 
 
 
-## file uploading using fetch 
+## file uploading using fetch api and formdata 
+
+- uploading image using form data and multer
+
+librareis
+
+    npm install --save multer
+
+server side code 
+
+    router.post('/fileUPload',  upload.single('avatar'),function(req, res, next) {
+        console.log("=========================================="); 
+        console.log(req.file, req.body);
+        res.json({ message: 'Data submitted' });
+        console.log("=========================================="); 
+    
+    });
+
+brouser side code
+
+
+//HTML
+---------
+
+    
+    <div class="jumbotron">
+        <div class="container">
+            <button class="btn btn-primary btn-lg" id="uploadFile">upload File</button>
+        
+        <h1 class="display-3" id="display-name-div"></h1>
+
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <form id="myForm" name="myForm" action="/ajax/fileUPload" method="post"  enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="userfile">Upload file:</label>
+                        <input type="file" id="userfile" name="userfile" multiple>
+                    </div>
+            
+                </form>
+            </div>
+        </div>
+    </div>
+
+// javascript code
+
+
+
+    <script>
+        window.addEventListener('load',init);
+        function init(){
+
+            let uploadButton = document.getElementById('uploadFile');
+            uploadButton.addEventListener('click',(event)=>{
+                event.preventDefault();
+                
+                const formData = new FormData();
+                const fileField = document.querySelector('input[type="file"]');
+                formData.append('avatar', fileField.files[0]);
+
+
+                fetch('/ajax/fileUPload', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(result => {
+                    console.log('Success:', result);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+
+                console.log("hellow all");
+            });
+        
+
+        }
+    </script>
 
 
 

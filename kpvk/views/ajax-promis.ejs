@@ -16,7 +16,7 @@
             <form id="myForm" name="myForm" action="/ajax/fileUPload" method="post"  enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="userfile">Upload file:</label>
-                    <input type="file" id="userfile" name="userfile">
+                    <input type="file" id="userfile" name="userfile" multiple>
                   </div>
         
             </form>
@@ -24,8 +24,11 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 
@@ -33,38 +36,31 @@
     window.addEventListener('load',init);
     function init(){
 
-        
-        // let uploadButton = document.getElementById('uploadFile');
-
-        // uploadButton.addEventListener('click',(event)=>{
-        //     event.preventDefault();
-
-        // })
-
-
-        const myHeaders = new Headers();
-            myHeaders.append('Content-Type', 'application/json');
-            myHeaders.append('Accept', 'application/json');
-            myHeaders.append( 'x-authantication-key',"abcdefslhlkj6uwyew8e775656");
+        let uploadButton = document.getElementById('uploadFile');
+        uploadButton.addEventListener('click',(event)=>{
+            event.preventDefault();
+            
+            const formData = new FormData();
+            const fileField = document.querySelector('input[type="file"]');
+            formData.append('avatar', fileField.files[0]);
 
 
-        const myRequest = new Request('http://localhost:3000/ajax/postjson', {
-            method: 'POST',
-            headers: myHeaders,
-            mode: 'cors',
-            cache: 'default',
-            body: JSON.stringify({name: "mustaq",wife: 'Arshiya Ahamed'})
+            fetch('/ajax/fileUPload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Success:', result);
+            })
+            .catch(error => {
+                 console.error('Error:', error);
+            });
+
+
+            console.log("hellow all");
         });
-
-
-
-        (async () => {
-            const rawResponse = await fetch(myRequest);
-            const content = await rawResponse.json();
-            console.log(content);
-        })();
-
-
+    
 
      }
 </script>

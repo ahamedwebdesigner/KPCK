@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var multer  = require('multer')
-//var upload = multer({ dest: 'uploads/' })
+var upload = multer({ dest: './uploads' })
 
 
 var storage = multer.diskStorage({
@@ -26,7 +26,7 @@ router.get('/', function(req, res, next) {
 });
 
 
-
+//  getName -> getModifiedName -> getMessage
 router.get('/getName', function(req, res, next) {
     setTimeout(()=>res.send("Mustaq"),3000) ;
         
@@ -42,8 +42,7 @@ router.get('/getModifiedName', function(req, res, next) {
 router.get('/getMessage', function(req, res, next) {
     console.log(req.query.name);
     setTimeout(()=>res.send("Hello "+req.query.name+" welcome to new world of development"),3000) ;
-    
-        
+         
 });
 
 
@@ -83,6 +82,25 @@ router.get('/fileUPload', function(req, res, next) {
         
 });
 
+
+
+
+router.post('/double-data',function(req, res, next) {
+    console.log("==========================================");   
+    console.log( req.body.salery );  
+    
+    if(req.body.salery==2){
+        res.json({ value :  req.body.salery+2.5 });
+    }
+
+    console.log("=========================================="); 
+   
+});
+
+
+
+
+
 router.post('/fileUPload',  upload.single('avatar'),function(req, res, next) {
     console.log("=========================================="); 
     console.log(req.file, req.body);
@@ -90,7 +108,6 @@ router.post('/fileUPload',  upload.single('avatar'),function(req, res, next) {
     console.log("=========================================="); 
    
 });
-
 
 
 

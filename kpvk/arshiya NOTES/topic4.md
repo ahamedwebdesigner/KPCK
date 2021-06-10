@@ -248,7 +248,29 @@ librareis
 
     npm install --save multer
 
-server side code 
+
+Import statements
+
+    var multer  = require('multer')
+    //var upload = multer({ dest: './uploads' })
+
+
+        var storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+        cb(null, './uploads')
+        },
+        filename: function (req, file, cb) {
+            cb(null, file.originalname);  
+             //cb(null, file.fieldname + '-' + Date.now())
+        }
+     });
+
+    var upload = multer({ storage: storage });
+
+
+
+
+server side code for uploading single image
 
     router.post('/fileUPload',  upload.single('avatar'),function(req, res, next) {
         console.log("=========================================="); 
@@ -257,6 +279,19 @@ server side code
         console.log("=========================================="); 
     
     });
+
+
+server side code for uploading multiple images
+
+    router.post('/fileUPload',  upload.array('avatar'),function(req, res, next) {
+        console.log("=========================================="); 
+        console.log(req.file, req.body);
+        
+        res.json({ message: 'Data submitted' });
+        console.log("=========================================="); 
+    
+    });
+
 
 brouser side code
 

@@ -84,6 +84,14 @@ router.get('/fileUPload', function(req, res, next) {
 
 
 
+router.post('/fileUPload',  upload.single('avatar'),function(req, res, next) {
+    console.log("=========================================="); 
+    console.log(req.file, req.body);
+    
+    res.json({ message: 'Data submitted' });
+    console.log("=========================================="); 
+   
+});
 
 router.post('/double-data',function(req, res, next) {
     console.log("==========================================");   
@@ -101,13 +109,7 @@ router.post('/double-data',function(req, res, next) {
 
 
 
-router.post('/fileUPload',  upload.single('avatar'),function(req, res, next) {
-    console.log("=========================================="); 
-    console.log(req.file, req.body);
-    res.json({ message: 'Data submitted' });
-    console.log("=========================================="); 
-   
-});
+
 
 
 

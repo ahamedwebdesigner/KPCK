@@ -13,12 +13,15 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <form id="myForm" name="myForm" action="/ajax/fileUPload" method="post"  enctype="multipart/form-data">
+             <form id="myForm" name="myForm" action="/ajax/fileUPload" method="post"  enctype="multipart/form-data"> 
                 <div class="form-group">
                     <label for="userfile">Upload file:</label>
-                    <input type="file" id="userfile" name="userfile" multiple>
+                    <input type="file" id="userfile" name="avatar" multiple>
                   </div>
-        
+                  <div class="form-group">
+                    <label for="userfile">Text file:</label>
+                    <input type="text" id="desc" name="desc" >
+                  </div>
             </form>
         </div>
     </div>
@@ -40,10 +43,8 @@
         uploadButton.addEventListener('click',(event)=>{
             event.preventDefault();
             
-            const formData = new FormData();
-            const fileField = document.querySelector('input[type="file"]');
-            formData.append('avatar', fileField.files[0]);
-
+       
+            const formData = new FormData(document.getElementById('myForm'));
 
             fetch('/ajax/fileUPload', {
                 method: 'POST',

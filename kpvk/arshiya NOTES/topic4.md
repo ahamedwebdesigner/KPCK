@@ -132,7 +132,7 @@ const fetch = require("node-fetch");
             
     });
 
-- client code 
+client code 
 
     (async () => {
         const rawResponse = await fetch('http://localhost:3000/ajax/postjson', {
@@ -180,7 +180,8 @@ const fetch = require("node-fetch");
 
 
 ## Using custom Request  object
-   const myHeaders = new Headers();
+
+        const myHeaders = new Headers();
         myHeaders.append('Content-Type', 'application/json');
         myHeaders.append('Accept', 'application/json');
         myHeaders.append( 'x-authantication-key',"abcdefslhlkj6uwyew8e775656");
@@ -287,9 +288,10 @@ brouser side code
         </div>
     </div>
 
-// javascript code
+javascript code 
 
-
+- when ever we are uploding file using treditional html form submittion then we need form tag  as shone above
+- when we are submittion using fomr data api no need for form and encript type 
 
     <script>
         window.addEventListener('load',init);
@@ -325,8 +327,56 @@ brouser side code
     </script>
 
 
+### form data using html form
+- get all form fields data using form 
+
+    let myForm = document.getElementById('myForm');
+    let formData = new FormData(myForm);
 
 
+Example code 
+
+
+      <form id="myForm" name="myForm" action="/ajax/fileUPload" method="post"  enctype="multipart/form-data"> 
+                <div class="form-group">
+                    <label for="userfile">Upload file:</label>
+                    <input type="file" id="userfile" name="avatar" multiple>
+                  </div>
+                  <div class="form-group">
+                    <label for="userfile">Upload file:</label>
+                    <input type="text" id="desc" name="desc" >
+                  </div>
+            </form>
+
+javascript code
+
+    function init(){
+
+        let uploadButton = document.getElementById('uploadFile');
+        uploadButton.addEventListener('click',(event)=>{
+            event.preventDefault();
+            
+       
+            const formData = new FormData(document.getElementById('myForm'));
+
+            fetch('/ajax/fileUPload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Success:', result);
+            })
+            .catch(error => {
+                 console.error('Error:', error);
+            });
+
+
+            console.log("hellow all");
+        });
+    
+
+     }
 
 
 

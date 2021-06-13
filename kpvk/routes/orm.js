@@ -23,7 +23,6 @@ var BookSchema = mongoose.Schema({
   price: Number,
   quantity: Number
 });
-
 //6) creating modal
 var Book = mongoose.model('Book', BookSchema, "Books");
 
@@ -44,6 +43,103 @@ router.get('/', function(req, res) {
   }); 
 
 
+
+
+  const FoodSchema = new mongoose.Schema({
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+      lowercase: true,
+    },
+    calories: {
+      type: Number,
+      default: 0,
+      validate(value) {
+        if (value < 0) throw new Error("Negative calories aren't real.");
+      },
+    },
+  });
+  const Food = mongoose.model("Food", FoodSchema);
+
+
+  
+router.get('/food', async function(req, res) {  
+
+  /* 
+  // Note: vaidation rules my apply while savingg data 
+  var food1 = new Food({ name: 'piZZa non-vez CHICKEn', calories: 1000 });
+
+  try {
+    let f1= await food1.save();
+    console.log(f1);
+    res.status(200).send('food saved by orm|'); 
+  } catch (error) {
+    //response.status(500).send(error);
+  }
+   */
+
+/* 
+// validation errors will though if enterd data is not appropriate
+  var food1 = new Food({ name: 'piZZa non-vez CHICKEn', calories: -1000 });
+
+  try {
+    let f1= await food1.save();
+    console.log(f1);
+    res.status(200).send('food saved by orm|'); 
+  } catch (error) {
+    res.status(500).send(error);
+  }
+*/
+ 
+
+  }); 
+
+
+
+  router.get("/all-foods", async (request, response) => {
+
+    /* to get all the stored foods in mongodb */
+    const foods = await Food.find({});
+  
+    try {
+      response.send(foods);
+    } catch (error) {
+      response.status(500).send(error);
+    }
+  });
+
+
+//http://localhost:3000/orm/food-name/pizza%20non-vez
+ // router.get("/food-search/:name/:cal", async (request, response) => {
+   // router.get("/food-search/:cal", async (request, response) => {
+    router.get("/food-search", async (request, response) => {
+    /**/
+    // const foods = await Food.find({name:request.params.name,calories:request.params.cal});
+     //const foods = await Food.find({calories:request.params.cal});
+    
+
+     
+
+    //const foods = await Food.find({calories:'300'});
+    //const foods = await Food.find({calories:'300',..........}); // 
+    try {
+
+      
+      if (mongoose.Types.ObjectId.isValid('60c5c4cffdffa31b38d5ba24')){    
+      
+        const foods = await Food.findById('60c5c4cffdffa31b38d5ba24');
+      }else{
+        console.log("Invalied user id");
+      }
+      response.send(foods);
+    } catch (error) {
+      response.status(500).send(error);
+    }
+
+  });
+
+  
 
 
 module.exports = router;

@@ -39,31 +39,27 @@
     window.addEventListener('load',init);
     function init(){
 
-        let uploadButton = document.getElementById('uploadFile');
-        uploadButton.addEventListener('click',(event)=>{
-            event.preventDefault();
-            
-       
-            const formData = new FormData(document.getElementById('myForm'));
-
-            fetch('/ajax/fileUPload', {
-                method: 'POST',
-                body: formData
+        let empsData = [];
+        
+        function getData(url,type,data) {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: url,
+                    type: type,
+                    data:data,
+                    success: function (data) {
+                        resolve(data)
+                    },
+                    error: function (error) {
+                        reject(error)
+                    },
+                })
             })
-            .then(response => response.json())
-            .then(result => {
-                console.log('Success:', result);
-            })
-            .catch(error => {
-                 console.error('Error:', error);
-            });
+        }
 
 
-            console.log("hellow all");
-        });
-    
 
-     }
+    }// init
 </script>
 
 </body>

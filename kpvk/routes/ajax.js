@@ -93,7 +93,7 @@ router.post('/fileUPload',  upload.array('avatar'),function(req, res, next) {
    
 });
 
-router.post('/double-data',function(req, res, next) {
+router.post('/getIncrementSalery',function(req, res, next) {
     console.log("==========================================");   
     console.log( req.body.salery );  
     

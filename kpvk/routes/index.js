@@ -5,6 +5,9 @@ const bcrypt = require('bcryptjs');
 let MongoClient = require('mongodb').MongoClient;
 
 
+const ObjectID = require('mongodb').ObjectID;
+
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
@@ -153,17 +156,55 @@ router.get('/middleware',middlewareg, function(req, res) {
 router.get('/mongo', function(req, res) {  
   let mungourl = 'mongodb+srv://kdpvk_db_user:mOtWSRqQsrsc3dLI@kpvk.npdza.mongodb.net/KDPVK?retryWrites=true&w=majority';
 
-  MongoClient.connect(mungourl, function(err, db) {
+  MongoClient.connect(mungourl,{useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
     if (err) throw err;
-    console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-    var dbo = db.db("products");
-    
-    dbo.collection("items").insertOne({ name:"facewash",price: 30},(err, result)=>{
+  
+    var dbo = db.db("products"); // database name
+/*
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//1) inserting 
+    dbo.collection("items").insertOne({ name:"face clenser",price: 300},(err, result)=>{ // table name 
       if (err) throw err;
             res.json(result);
             db.close();
     });
-    console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+
+
+    dbo.collection("items").insertOne({ name:"facewash",price: 30},(err, result)=>{ // table name 
+      if (err) throw err;
+            res.json(result);
+            db.close();
+    });
+
+*/
+
+/*
+//2) updating
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// using mongodb Object ID
+
+  dbo.collection("items").updateOne(
+    { _id: new ObjectID('60c6da93bb8f743408d65d82') },
+    { $set: { name:"xxxxxxxxxxxxxxxxxxxxxx" ,price: 400} },
+    {upsert:true}, 
+    function(err, result) {
+      res.json(result);
+    });
+
+
+
+    dbo.collection("items").updateOne(
+          { name:"facewash new"},
+          { $set: { name:"facewash very" ,price: 400} },
+           {upsert:true}, 
+           function(err, result) {
+            res.json(result);
+           });
+*/
+    
+dbo.collection("items")
+
   });
 
  

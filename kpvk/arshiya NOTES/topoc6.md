@@ -135,7 +135,7 @@ Refer: [Mongo Db connection options](https://mongodb.github.io/node-mongodb-nati
         }
 ```
 
-> # 1) Read All the records : Method1: using callbacks using 
+> # 2) find():  Read All the records : Method1: using callbacks 
 - find()method brings all the documents in the collection 
 
 ```
@@ -198,9 +198,106 @@ Refer: [Mongo Db connection options](https://mongodb.github.io/node-mongodb-nati
         }
 ```
 
+> # More about insert() method
+
+SINTAX: 
+```
+db.collection(<<collectionName>>).insert(
+   <document or array of documents>,
+   {
+     writeConcern: <document>,
+     ordered: <boolean>
+   }
+)
+```
+
+
+Inserting single document or multiple documents
+
+
+```        
+            const mongoResult = await db.collection("store").insert( 
+                     { item: "calender", qty: 25, tags: ["blue", "red"], dim_cm: [ 14, 21 ] }
+            ); //3) CommandResult 
+```          
+inserting multiple resords using insert() method
+``` 
+            //Use insertOne, insertMany or bulkWrite instead
+            const mongoResult = await db.collection("store").insert( 
+                [
+                    { _id: 11, item: "pencil", qty: 50, type: "no.2" },
+                    { item: "pen", qty: 20 },
+                    { item: "eraser", qty: 25 }
+                  ]
+            ); 
+ ```           
+Inserting multiple resords using insert() method and ordered option
+
+ ```
+            const mongoResult = await db.collection("store").insert( 
+                [
+                    { _id: 11, item: "pencil", qty: 50, type: "no.2" },
+                    { item: "pen", qty: 20 },
+                    { item: "eraser", qty: 25 }
+                  ],
+                 // { ordered: false } 
+                  { ordered: true } //
+            ); 
+ ```
+
+
+## 	insertMany()
+db.collection.insertMany() inserts multiple documents into a collection.
+
+SYNTAX:
+ ```
+        db.collection.insertMany(
+        [ <document 1> , <document 2>, ... ],
+        {
+            writeConcern: <document>,
+            ordered: <boolean>
+        }
+        )
+ ```
+
+> #### example 1
+
+ ```
+ let mungourl = 'mongodb+srv://kdpvk_db_user:mOtWSRqQsrsc3dLI@kpvk.npdza.mongodb.net/KDPVK?retryWrites=true&w=majority';
+        try {
+           let mClient =  await MongoClient.connect(mungourl,{useNewUrlParser: true, useUnifiedTopology: true}); // 1) MongoClient
+           const db = mClient.db("GBEMS");    //Db
+           
+  
+           const mongoResult = await db.collection("bookhouse").insertMany( 
+            [
+                { item: "journal", qty: 25, tags: ["blank", "red"], dim_cm: [ 14, 21 ] },
+                { item: "notebook", qty: 50, tags: ["red", "blank"], dim_cm: [ 14, 21 ] },
+                { item: "paper", qty: 100, tags: ["red", "blank", "plain"], dim_cm: [ 14, 21 ] },
+                { item: "planner", qty: 75, tags: ["blank", "red"], dim_cm: [ 22.85, 30 ] },
+                { item: "postcard", qty: 45, tags: ["blue"], dim_cm: [ 10, 15.25 ] }
+             ] ,
+              { ordered: true } 
+            ); 
+
+            if(mongoResult.result.ok){
+                res.json(mongoResult.result); 
+            }else{
+                throw new error("something went wrong during insertion");
+            }
+                    
+            } catch (error) {
+                res.status(500).send(error); 
+            }
+ ```
+
+
+
+
+
+
+
 
 # Resourses
-
-
 
 Refer: [online Json viewer](http://jsonviewer.stack.hu/ "online Json viewer")

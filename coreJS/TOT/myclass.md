@@ -1,108 +1,14 @@
-# working with mangodb pacage
+## inserting record in mongodb 
 
 
-- requre mungodb npm pacage 
-- get mongoClient form mongodb pacagea and using connect() method make a connection to the MDB
-- the call back function of mungoclient provied by two objects 1) error obj and 2) DB connection object
-- if error occur while connection error object gives information about error occured
-- on successeful connection to MDB DBobject is avalable for database operations
-
-> ## how to connect 
-  - mongo clietn is main connection object 
-  - the main important methods of mongoclient are
-
-    ```
-        MongoClient = function(server, options);
-
-        MongoClient.open()
-
-        MongoClient.close()
-
-        MongoClient.db()
-
-        MongoClient.connect()
-
-    ```
-> ### 1) connection using Db
-
-  - Notice that you configure the MongoClient just as you would have done the Db object. 
-  - The main difference is that you access the db instances using the db method on the MongoClient object instead of   
-       using the Db instance directly as you would previous methods.
-  - MongoClient supports the same options as the previous Db instance you would have created.
-
-```
-    var MongoClient = require('mongodb').MongoClient
-    , Server = require('mongodb').Server;
-
-    var mongoClient = new MongoClient(new Server('localhost', 27017));
-
-    mongoClient.open(function(err, mongoClient) {
-      var db1 = mongoClient.db("mydb");
-
-    mongoClient.close();
-    });
-```
-
-## 2) The URL connection format
-using mongodb url
-
-```
-    mongodb://[username:password@]host1[:port1][,host2[:port2],...[,hostN[:portN]]][/[database][?options]]
-```
-
-1. mongodb:// is a required prefix to identify that this is a string in the standard connection format.
-1. username:password@:  is optional. If given, the driver will attempt to login to a database after connecting to a database server.
-1. host1:  is the only required part of the URI. It identifies either a hostname, IP address, or unix domain socket
-1. :portX: is optional and defaults to :27017 if not provided.
-1. /database : is the name of the database to login to and thus is only relevant if the username:password@ syntax is used.
-    If not specified the “admin” database will be used by default.
-1. ?options: are connection options. Note that if database is absent there is still a / required between the last host and the ? introducing the options. Options are name=value pairs and the pairs are separated by “&”. For any unrecognized or unsupported option, a driver should log a warning and continue processing. A driver should not support any options that are not explicitly defined in this specification. This is in order to reduce the likelihood that different drivers will support overlapping  that differ in small but incompatible ways (like different name, different values, or different default value).
-const ObjectID = require('mongodb').ObjectID;
-
-- connection mongo connection url
-
-
-
-```
-    let MongoClient = require('mongodb').MongoClient;
-    MongoClient.connect(<<mungourl>>, function(err, dbo) {
-    if (err) throw err;
-    // DatabaseName: products & CollectionName: items
-    var dbo = dbo.db("products");
-    dbo.collection("items").insertOne({ name:"facewash",price: 30},(err, result)=>{
-        if (err) throw err;
-            res.json(result);
-            db.close();
-        });
-    });
-```
-Refer the link for [Mongo Db connection options](https://mongodb.github.io/node-mongodb-native/driver-articles/mongoclient.html?highlight=mongoclient "options for connection mongodb using mungo cliet")
-
-# mongodb CRUD
-
-
->## create new recard  (insertOne())
-
-```
-  let mungourl = 'mongodb+srv://kdpvk_db_user:mOtWSRqQsrsc3dLI@kpvk.npdza.mongodb.net/KDPVK?retryWrites=true&w=majority';
-  
-    try {
-        MongoClient.connect(mungourl,{useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
-            if (err) throw err;
-            var dbo = db.db("KPVK"); // database name
-            dbo.collection("inventory").insertOne(
-                { item: "calender", qty: 25, tags: ["blue", "red"], dim_cm: [ 14, 21 ] },
-                (err, result)=>{ // table name 
-                if (err) throw err;
-                    response.json(result);
-                    db.close();
-            });
-          });//#MongoClient
-    } catch (error) {
-      response.status(500).send("error");
-    }
-```
-
+db.products.insert(
+   [
+     { _id: 20, item: "lamp", qty: 50, type: "desk" },
+     { _id: 21, item: "lamp", qty: 20, type: "floor" },
+     { _id: 22, item: "bulk", qty: 100 }
+   ],
+   { ordered: false }
+)
 
 
 

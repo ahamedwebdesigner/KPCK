@@ -15,33 +15,31 @@ router.get("/", async (req, res) => {
         //----------------------------------------
         //GBEMS :inventory
         let mungourl = 'mongodb+srv://kdpvk_db_user:mOtWSRqQsrsc3dLI@kpvk.npdza.mongodb.net/KDPVK?retryWrites=true&w=majority';
-        //let mungourl = 'Qsrsc3dLI@kpvk.npdza.mongodb.net/KDPVK?retryWrites=true&w=majority';
-
         try {
-            const Mongoclt = await MongoClient.connect(mungourl,{ useUnifiedTopology: true });
-            const db = Mongoclt.db("GBEMS");
-            //const result = await db.collection("inventory").find({});
+           let mClient =  await MongoClient.connect(mungourl,{useNewUrlParser: true, useUnifiedTopology: true}); // 1) MongoClient
+           const db = mClient.db("GBEMS");    //Db
+           
+  
+           const mongoResult = await db.collection("bookhouse").insertMany( 
+            [
+                { item: "journal", qty: 25, tags: ["blank", "red"], dim_cm: [ 14, 21 ] },
+                { item: "notebook", qty: 50, tags: ["red", "blank"], dim_cm: [ 14, 21 ] },
+                { item: "paper", qty: 100, tags: ["red", "blank", "plain"], dim_cm: [ 14, 21 ] },
+                { item: "planner", qty: 75, tags: ["blank", "red"], dim_cm: [ 22.85, 30 ] },
+                { item: "postcard", qty: 45, tags: ["blue"], dim_cm: [ 10, 15.25 ] }
+             ] ,
+              { ordered: true } 
+            ); 
 
-            // console.log("------------------------------------");
-            // console.log(Mongoclt); //MongoClient
-            // console.log(db); //Db
-            // console.log(result); //Cursor
-            // console.log("------------------------------------");
-
-            // while (await result.hasNext()) {
-            //     const doc = await result.next();
-            //     console.log(doc);
-            //   };
-            //   res.send("all is well");
-
-            const result = await db.collection("inventory").find({}).toArray();
-            res.json(result)
-            
-        }  catch (error) {
-            res.status(500).send(error);
-
-        }
-
+            if(mongoResult.result.ok){
+                res.json(mongoResult.result); 
+            }else{
+                throw new error("something went wrong during insertion");
+            }
+                    
+            } catch (error) {
+                res.status(500).send(error); 
+            }
         //----------------------------------------
  });//#end get
 

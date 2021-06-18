@@ -1,55 +1,9 @@
-## inserting record in mongodb 
+deleteMany
+deleteOne
 
+findOneAndDelete
+findOneAndUpdate
 
-db.products.insert(
-   [
-     { _id: 20, item: "lamp", qty: 50, type: "desk" },
-     { _id: 21, item: "lamp", qty: 20, type: "floor" },
-     { _id: 22, item: "bulk", qty: 100 }
-   ],
-   { ordered: false }
-)
-
-
-
-
->## inserting multiple  elements  (insertMany())
-
-
-```
-    let mungourl = 'mongodb+srv://kdpvk_db_user:mOtWSRqQsrsc3dLI@kpvk.npdza.mongodb.net/KDPVK?retryWrites=true&w=majority';
-  
-    try {
-        MongoClient.connect(mungourl,{useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
-            if (err) throw err;
-            var dbo = db.db("KPVK"); // database name
-            //    dbo.collection("items")
-            //    dbo.insertMany
-
-            dbo.collection('inventory').insertMany( [
-                { item: "journal", qty: 25, tags: ["blank", "red"], dim_cm: [ 14, 21 ] },
-                { item: "notebook", qty: 50, tags: ["red", "blank"], dim_cm: [ 14, 21 ] },
-                { item: "paper", qty: 100, tags: ["red", "blank", "plain"], dim_cm: [ 14, 21 ] },
-                { item: "planner", qty: 75, tags: ["blank", "red"], dim_cm: [ 22.85, 30 ] },
-                { item: "postcard", qty: 45, tags: ["blue"], dim_cm: [ 10, 15.25 ] }
-             ] , function(error, doc) {
-                  if(error) {
-                     console.log(error);
-                  } else {
-                     console.log('success');
-                  }
-               
-              }); 
-
-        
-          });
-
-          
-      response.send("foods");
-    } catch (error) {
-      response.status(500).send("error");
-    }
-```
 
 >### example two
 ```
@@ -89,12 +43,6 @@ db.products.insert(
 
  
 > ## Updating existing elements
-
-- we can update any elements singl documnet or many docutments values using updateOne() and updateMany()
-- **syntax :    db.collection.updateMany(filter, update, options)**
-      - filter  -> The selection criteria for the update. The same query selectors as in the find() method are available.
-      - update  -> document or pipeline The modifications to apply 
-      - options -> 
 
 
     

@@ -249,7 +249,7 @@ Inserting multiple resords using insert() method and ordered option
 ## 	insertMany()
 db.collection.insertMany() inserts multiple documents into a collection.
 
-SYNTAX:
+SYNTAX: 
  ```
         db.collection.insertMany(
         [ <document 1> , <document 2>, ... ],
@@ -260,9 +260,12 @@ SYNTAX:
         )
  ```
 
-> #### example 1
+> #### example 1 : insertMany() using asycn and awaite methods
 
  ```
+ 
+router.get("/", async (req, res) => {
+ 
  let mungourl = 'mongodb+srv://kdpvk_db_user:mOtWSRqQsrsc3dLI@kpvk.npdza.mongodb.net/KDPVK?retryWrites=true&w=majority';
         try {
            let mClient =  await MongoClient.connect(mungourl,{useNewUrlParser: true, useUnifiedTopology: true}); // 1) MongoClient
@@ -289,7 +292,120 @@ SYNTAX:
             } catch (error) {
                 res.status(500).send(error); 
             }
+    });//#end get         
  ```
+> #### example 2 : insertMany() using callbacks
+
+```
+    let mungourl = 'mongodb+srv://kdpvk_db_user:mOtWSRqQsrsc3dLI@kpvk.npdza.mongodb.net/KDPVK?retryWrites=true&w=majority';
+  
+    try {
+        MongoClient.connect(mungourl,{useNewUrlParser: true, useUnifiedTopology: true}, function(err, db) {
+            if (err) throw err;
+            var dbo = db.db("KPVK"); // database name
+            //    dbo.collection("items")
+            //    dbo.insertMany
+
+            dbo.collection('inventory').insertMany( [
+                { item: "journal", qty: 25, tags: ["blank", "red"], dim_cm: [ 14, 21 ] },
+                { item: "notebook", qty: 50, tags: ["red", "blank"], dim_cm: [ 14, 21 ] },
+                { item: "paper", qty: 100, tags: ["red", "blank", "plain"], dim_cm: [ 14, 21 ] },
+                { item: "planner", qty: 75, tags: ["blank", "red"], dim_cm: [ 22.85, 30 ] },
+                { item: "postcard", qty: 45, tags: ["blue"], dim_cm: [ 10, 15.25 ] }
+             ] , function(error, doc) {
+                   if (error) throw error;
+                    response.send(doc);
+              }); 
+          });
+      response.send("foods");
+    } catch (error) {
+      response.status(500).send("error");
+    }
+```
+
+# Updating existing element
+> ## db.collection.updateOne()
+Syntax: db.collection.updateOne(filter, update, options)
+
+- we can update any elements singl documnet or many docutments values using updateOne() and updateMany()
+- updateOne updates one document , if may document are matched then first occurance of the docuent is modefied
+
+- **syntax :    db.collection.updateMany(filter, update, options)**
+      - filter  -> The selection criteria for the update. The same query selectors as in the find() method are available.
+      - update  -> document or pipeline The modifications to apply 
+      - options -> 
+
+>## example :
+<pre>
+        //GBEMS :inventory
+        let mungourl = 'mongodb+srv://kdpvk_db_user:mOtWSRqQsrsc3dLI@kpvk.npdza.mongodb.net/KDPVK?retryWrites=true&w=majority';
+        try {
+                let mClient =  await MongoClient.connect(mungourl,{useNewUrlParser: true, useUnifiedTopology: true}); // 1) MongoClient
+                const db = mClient.db("GBEMS");    //Db
+                let mongoResults = await db.collection('bookhouse')
+                                           .updateOne({ item:"postcard"}, 
+                                                      { 
+                                                        $set: {  item:"NEW postcard" } ,    
+                                                        $inc: { "violations" : 3}
+                                                      });
+          
+                console.log('----------Begin-----------');
+                console.log(mongoResults.result);
+                console.log('----------END-----------');
+                res.send(mongoResults.result);
+
+            } catch (error) {
+                            console.log('----------ERROR: -----------');
+                            console.log(JSON.parse(JSON.stringify(error)))
+                            console.log('----------#ERROR: -----------');
+                res.status(500).send(error); 
+        }
+</pre>
+
+### updating options
+- db.collection.updateOne() method can accept an aggregation pipeline [ stage1, stage2, ... ] 
+    that specifies the modifications to perform.
+
+The pipeline can consist of the following stages:
+
+- $addFields and its alias $set
+- $project and its alias $unset
+- $replaceRoot and its alias $replaceWith.
+
+### $set
+- $set appends new fields to existing documents. You can include one or more $set stages in an aggregation operation.
+
+
+
+
+
+
+
+
+
+
+
+### upsert: when upsert option 
+
+- when upsert option is used then data if the matching recard is not present then
+  new recard is created 
+
+<pre>
+        // understanding upsert option                                  
+                let mongoResults = await db.collection('bookhouse')
+                                            .updateOne(
+                                                { "item" : "Pizza Rat's Pizzaria" },
+                                                { $set: {"_id" : 4, "violations" : 7, "borough" : "Manhattan" } },
+                                            <b> { upsert: true } <b>
+                                            );
+</pre>
+
+
+
+
+
+
+
 
 
 

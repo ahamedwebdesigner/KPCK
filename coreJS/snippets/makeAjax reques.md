@@ -63,3 +63,144 @@
     xmlhttp.send();
 
 
+# using Fetch
+
+fetch('path-to-the-resource-to-be-fetched')
+  .then((response) => {
+  
+    // Code for handling the response
+  })
+  .catch((error) => {
+  
+    // Code for handling the error
+  });
+
+  # Axios: 
+  Axios is a Javascript library used to make HTTP requests from node.js or XMLHttpRequests from the browser and it supports the Promise API that is native to JS ES6
+
+    axios.get('url')
+    .then((response) => {
+        // Code for handling the response
+    })
+    .catch((error) => {
+        // Code for handling the error
+    })
+
+
+EXample1: 
+
+
+
+const options = {
+  url: 'http://localhost/test.htm',
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json;charset=UTF-8'
+  },
+  data: {
+    a: 10,
+    b: 20
+  }
+};
+
+axios(options)
+  .then(response => {
+    console.log(response.status);
+  });
+
+
+
+## using fetch
+
+
+const url = 'http://localhost/test.htm';
+const options = {
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json;charset=UTF-8'
+  },
+  body: JSON.stringify({
+    a: 10,
+    b: 20
+  })
+};
+
+fetch(url, options)
+  .then(response => {
+    console.log(response.status);
+  });
+
+# Response timeout : axios
+
+axios({
+  method: 'post',
+  url: '/login',
+  timeout: 4000,    // 4 seconds timeout
+  data: {
+    firstName: 'David',
+    lastName: 'Pollock'
+  }
+})
+.then(response => {/* handle the response */})
+.catch(error => console.error('timeout exceeded'))
+
+
+# Response timeout : fetch
+
+
+const controller = new AbortController();
+const options = {
+  method: 'POST',
+  signal: controller.signal,
+  body: JSON.stringify({
+    firstName: 'David',
+    lastName: 'Pollock'
+  })
+};  
+const promise = fetch('/login', options);
+const timeoutId = setTimeout(() => controller.abort(), 4000);
+
+promise
+  .then(response => {/* handle the response */})
+  .catch(error => console.error('timeout exceeded'));
+
+
+
+  # JSON data transformation
+
+
+    // axios
+    axios.get('https://api.github.com/orgs/axios')
+    .then(response => {
+        console.log(response.data);
+    }, error => {
+        console.log(error);
+    });
+
+    // fetch()
+    fetch('https://api.github.com/orgs/axios')
+    .then(response => response.json())    // one extra step
+    .then(data => {
+        console.log(data) 
+    })
+    .catch(error => console.error(error));
+
+# HTTP interceptors
+
+
+    axios.interceptors.request.use(config => {
+    // log a message before any HTTP request is sent
+    console.log('Request was sent');
+
+    return config;
+    });
+
+    // sent a GET request
+    axios.get('https://api.github.com/users/sideshowbarker')
+    .then(response => {
+        console.log(response.data);
+    });
+
+    

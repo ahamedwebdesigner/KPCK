@@ -43,6 +43,7 @@ var setupRouter = require('./routes/setup');
 var ormRouter = require('./routes/orm');
 var ajaxRouter = require('./routes/ajax');
 var mongoRouter = require('./routes/mongo');
+var noSqlRouter = require('./routes/nosql');
 
 var app = express();
 
@@ -89,6 +90,8 @@ app.use('/setup', setupRouter);
 app.use('/orm', ormRouter);
 app.use('/ajax', ajaxRouter);
 app.use('/mongolearn', mongoRouter);
+app.use('/nosql', noSqlRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

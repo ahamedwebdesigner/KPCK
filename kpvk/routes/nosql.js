@@ -53,7 +53,6 @@ let teacher = [
         _id: 3, 
         Name: "ward", 
         extraHowers:[0,30,5],
-        subject:['science','mathematics'],
         "interests": ["drawing","pastels"],
        
         rank: 11,
@@ -141,7 +140,21 @@ let teacher = [
 
 
 router.get("/", async (req, res) => {
-         res.send("hellow");
+    let mungourl = 'mongodb+srv://kdpvk_db_user:mOtWSRqQsrsc3dLI@kpvk.npdza.mongodb.net/KDPVK?retryWrites=true&w=majority';
+
+    try {
+        let mClient =  await MongoClient.connect(mungourl,{useNewUrlParser: true, useUnifiedTopology: true}); // 1) MongoClient
+        const db = mClient.db("MGBS");    //Db
+        
+        // increment remove field
+        let mongoResults=[];
+         const result = await db.collection("TeachersDB").find({}).toArray(); 
+         res.render('nosql',{userData:result })
+
+    }catch(error){
+
+    }
+
 });//#end get
 
 router.get("/reset-data", async (req, res) => {

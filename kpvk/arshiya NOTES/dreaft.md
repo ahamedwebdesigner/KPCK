@@ -1,7 +1,7 @@
 
 
-                //const result = await db.collection("emp").find({"employe" :{$in:['Scott','frank']}}).toArray(); 
-                // const result = await db.collection("emp").find({"skills.sports" :'tennis'}).toArray(); 
+    
+                // 
               
  
 
@@ -13,31 +13,10 @@
                 
 
 
-                
-# find elements
 
-## find all
 
-```
- const result = await db.collection("emp").find({}).toArray();
- 
- ```
 
-## find by field name
-``` 
-    const result = await db.collection("emp").find({employe: "Scott"}).toArray();
-```
 
-## find by field name 
-
-```
-    // id with 2 and 3
-    //const result = await db.collection("emp").find({"_id" :{$in:[2,3]}}).toArray(); 
-
-    // emplye scott and frank
-    //const result = await db.collection("emp").find({"employe" :{$in:['Scott','frank']}}).toArray(); 
-               
-```
 
 
 

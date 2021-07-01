@@ -1,3 +1,20 @@
+# mongoDb
+Read Operations find and return documents stored within your MongoDB database.
+Write Operations insert, modify, or delete documents in your MongoDB database.
+
+
+# Write Operations
+
+Insert a Document
+Delete a Document
+Change a Document
+Update Arrays in a Document
+Insert or Update in a Single Operation
+
+
+
+
+
 deleteMany
 deleteOne
 

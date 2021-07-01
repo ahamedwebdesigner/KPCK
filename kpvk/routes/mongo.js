@@ -9,29 +9,131 @@ let ObjectID = require('mongodb').ObjectID;
 let teacher = [
     { 
         _id: 1, 
-        Name: "Scott", 
-        subject:['english','telugu'],
-        "interests": ["Running","Darts"],
+        Name: "smith", 
+        extraHowers:[20,30,5],
+        "interests": ["Running","yoga"],
         address : "2030 Martian Way", 
-        zipCode : "90698345"  
+        rank: 10,
+        "salery": 20000, 
+        "expenditure": 3000,
+        mobileNo : "90698345",  
+        "address": {
+            "street": "Kulas Light",
+            "suite": "Apt. 556",
+            "city": "Gwenborough",
+            "zipcode": "92998-3874",
+            "geo": {
+              "lat": "-37.3159",
+              "lng": "81.1496"
+            }
+          },
     },
     { 
         _id: 2, 
-        Name: "Scott", 
-        subject:['english','telugu'],
-        "interests": ["Running","Darts"],
-        address : "2030 Martian Way", 
-        zipCode : 43339374 
+        Name: "allen", 
+        extraHowers:[2,3,5],
+        "interests": ["Running","Bowling"],
+        address : "309 delles ", 
+        rank: 20,
+        "salery": 12512, 
+        "expenditure": 50051,
+        mobileNo : 43339374 ,
+        "address": {
+            "street": "Victor Plains",
+            "suite": "Suite 879",
+            "city": "Wisokyburgh",
+            "zipcode": "90566-7771",
+            "geo": {
+              "lat": "-43.9509",
+              "lng": "-34.4618"
+            }
+          },
     },
     { 
         _id: 3, 
-        Name: "Scott", 
-        subject:['english','telugu'],
-        "interests": ["Running","Darts"],
-        address : "2030 Martian Way", 
-        zipCode: ['995588214']
+        Name: "ward", 
+        extraHowers:[0,30,5],
+        subject:['science','mathematics'],
+        "interests": ["drawing","pastels"],
+        address : "secondcroll", 
+        rank: 11,
+        "salery": 101010, 
+        "expenditure": 50012,
+        mobileNo: ['995588214'],
+        "address": {
+            "street": "Douglas Extension",
+            "suite": "Suite 847",
+            "city": "McKenziehaven",
+            "zipcode": "59590-4157",
+            "geo": {
+              "lat": "-68.6102",
+              "lng": "-47.0653"
+            }
+          },
     },
-    
+    { 
+        _id: 4, 
+        Name: "martin", 
+        extraHowers:[5,3,5],
+        "interests": ["pastels","Darts"],
+        address : "third cross main way", 
+        rank: 12,
+        "salery": 150000, 
+        "expenditure": 10000,
+        mobileNo: ['995588214'],
+        "address": {
+            "street": "Hoeger Mall",
+            "suite": "Apt. 692",
+            "city": "South Elvis",
+            "zipcode": "53919-4257",
+            "geo": {
+              "lat": "29.4572",
+              "lng": "-164.2990"
+            }
+          },
+    },
+    { 
+        _id: 5, 
+        Name: "Blis", 
+        extraHowers:[2,30,50],
+        "interests": ["cooking","backing"],
+        address : "fitth cross main way", 
+        rank: 13,
+        "salery": 301252, 
+        "expenditure": 12345,
+        mobileNo: ['3366225511'],
+        "address": {
+            "street": "Skiles Walks",
+            "suite": "Suite 351",
+            "city": "Roscoeview",
+            "zipcode": "33263",
+            "geo": {
+              "lat": "-31.8129",
+              "lng": "62.5342"
+            }
+          },
+    },
+    { 
+        _id: 6, 
+        Name: "Ana", 
+        extraHowers:[21,5,11],
+        "interests": ["cooking","backing","Running"],
+        address : "ninthy one croll street", 
+        rank: 9,
+        "salery": 56000, 
+        "expenditure": 21000,
+        mobileNo: ['6655224455'],
+        "address": {
+            "street": "Norberto Crossing",
+            "suite": "Apt. 950",
+            "city": "South Christy",
+            "zipcode": "23505-1337",
+            "geo": {
+              "lat": "-71.4197",
+              "lng": "71.7478"
+            }
+          },
+    },
     
  ];
 
@@ -90,10 +192,6 @@ router.get("/", async (req, res) => {
 
 
 
-
-
-
-
  router.get("/insertmany", async (req, res) => {
      //----------------------------------------
     //GBEMS :inventory
@@ -129,8 +227,14 @@ router.get("/teacher-create", async (req, res) => {
    try {
            let mClient =  await MongoClient.connect(mungourl,{useNewUrlParser: true, useUnifiedTopology: true}); // 1) MongoClient
            const db = mClient.db("GBEMS");    //Db
+            
+           const DropResult = await db.collection("teacher").drop();
+           console.log("=================");
+           console.log(DropResult);
+           console.log("=================");
+           
            const mongoResult = await db.collection("teacher").insertMany( teacher  , { ordered: true } ); 
-                   if(mongoResult.result.ok){
+                if(mongoResult.result.ok){
                        res.json(mongoResult.result); 
                }else{
                    throw new error("something went wrong during insertion");
@@ -148,6 +252,64 @@ router.get("/teacher-create", async (req, res) => {
 
 
 
+
+router.get("/teachers", async (req, res) => {
+ 
+    //----------------------------------------
+    //GBEMS :inventory
+    let mungourl = 'mongodb+srv://kdpvk_db_user:mOtWSRqQsrsc3dLI@kpvk.npdza.mongodb.net/KDPVK?retryWrites=true&w=majority';
+    try {
+            let mClient =  await MongoClient.connect(mungourl,{useNewUrlParser: true, useUnifiedTopology: true}); // 1) MongoClient
+            const db = mClient.db("GBEMS");    //Db
+            
+            // increment remove field
+            let mongoResults=[];
+
+
+       
+   
+           const result = await db.collection("teacher").find({$where: function() {
+               return this.name ="Ana"
+           }}).toArray(); 
+        
+
+         
+
+
+           // in array
+            //const result = await db.collection("teacher").find({interests:'Running'}).toArray(); 
+            //const result = await db.collection("teacher").find({interests:{ $all: ["Running"] } }).toArray(); 
+            //const result = await db.collection("teacher").find({interests:{ $all: ["Running","yoga"] } }).toArray(); 
+
+           // const result = await db.collection("teacher").find({interests: { $size: 3 } }).toArray(); 
+
+            // array Of objects
+            //const result = await db.collection("teacher").find({extraHowers:{ $elemMatch: { $gte: 10, $lt: 20 } } }).toArray(); 
+           
+          
+
+            // child documents quering
+            //const result = await db.collection("teacher").find({"address.zipcode" :'92998-3874'}).toArray(); 
+            //const result = await db.collection("teacher").find({"address.geo.lat" :'-68.6102'}).toArray(); 
+
+
+            res.render('mongo',{
+             //insertResult:insertResult ,
+                insertResult:mongoResults ,
+                userData:result
+            })
+       
+        } catch (error) {
+            console.log('----------ERROR: -----------');
+                      console.log(JSON.parse(JSON.stringify(error)))
+                      console.log(error)
+            console.log('----------#ERROR: -----------');
+
+            res.status(500).send(error); 
+      
+         }
+    //---------------------------------------- res.sendStatus
+});//#end get
 
 
 

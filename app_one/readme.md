@@ -1,0 +1,1 @@
+npm i nodemon cors express firebase

@@ -126,9 +126,10 @@ The find() and findAndModify() projection can accept aggregation expressions and
      const result = await db.collection("emp").find({}).toArray();  //find all
      const result = await db.collection("emp").find({employe: "Scott"}).toArray(); //find by field name
 
-      //const result = await db.collection("emp").find({"_id" :{$in:[2,3]}}).toArray();      // id with 2 and 3
+    //const result = await db.collection("emp").find({"_id" :{$in:[2,3]}}).toArray();      // id with 2 and 3
 
-       //const result = await db.collection("emp").find({"employe" :{$in:['Scott','frank']}}).toArray();   // emplye scott and frank
+    //const result = await db.collection("emp").find({"employe" :{$in:['Scott','frank']}}).toArray();   
+    // emplye scott and frank
 
     //db.sales.find({"price": {$gt: 100}})  {make: {$not: {$eq: "smith"}}}
     // const result = await db.collection("teacher").find({Name:'smith'}).toArray();

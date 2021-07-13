@@ -16,11 +16,7 @@
     </div>
     <hr>
  
-    <pre style="background-color: #eee;">
-        <%- JSON.stringify(insertResult, null,2) %> 
 
-        <!-- <%-insertResult %>  -->
-    </pre>
 
    
 <!-- footer.ejs -->
@@ -31,12 +27,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/json2html/2.1.0/json2html.min.js"></script>
 <script src="/javascripts/jsontohtml.js"></script>
 <script type="text/javascript">
-    window.addEventListener('load', function(){
-        var userData = '<%- JSON.stringify(userData) %>' ;
-        let userdat = JSON.parse(userData);
-        //   console.log(userdat);
-        document.querySelector("#tablecontainer").appendChild(buildHtmlTable(userdat,'table'))
-   });
+//     window.addEventListener('load', function(){
+//         var userData = '<%- JSON.stringify(userData) %>' ;
+//         let userdat = JSON.parse(userData);
+//         //   console.log(userdat);
+//         document.querySelector("#tablecontainer").appendChild(buildHtmlTable(userdat,'table'))
+//    });
 </script>
 
 

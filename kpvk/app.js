@@ -44,7 +44,7 @@ var ormRouter = require('./routes/orm');
 var ajaxRouter = require('./routes/ajax');
 var mongoRouter = require('./routes/mongo');
 var noSqlRouter = require('./routes/nosql');
-
+var firebase = require('./routes/firebase');
 var app = express();
 
 // view engine setup
@@ -53,14 +53,16 @@ app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
-app.use( bodyParser.json() );       // to support JSON-encoded bodies
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-  extended: true
-})); 
+// app.use( bodyParser.json() );       // to support JSON-encoded bodies
+// app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+//   extended: true
+// })); 
+
+
 
 
 
@@ -91,6 +93,7 @@ app.use('/orm', ormRouter);
 app.use('/ajax', ajaxRouter);
 app.use('/mongolearn', mongoRouter);
 app.use('/nosql', noSqlRouter);
+app.use('/firebase', firebase);
 
 
 // catch 404 and forward to error handler

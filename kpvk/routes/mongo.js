@@ -153,7 +153,7 @@ let testData = [
  ];
 
 
-router.get("/", async (req, res) => {
+router.get("/trash", async (req, res) => {
  
         //----------------------------------------
         //GBEMS :inventory
@@ -176,7 +176,7 @@ router.get("/", async (req, res) => {
                 
                 const result = await db.collection("emp").find({"skills.sports" :'tennis'}).toArray();
                 console.log(result);                            
-                res.render('mongo',{userData:result})
+                res.render('mongo',{insertResult:result})
            
             } catch (error) {
                 console.log('----------ERROR: -----------');
@@ -252,8 +252,7 @@ router.get("/teacher-create", async (req, res) => {
 
 
 
-
-router.get("/teachers", async (req, res) => {
+router.get("/teacher", async (req, res) => {
  
     //----------------------------------------
     //GBEMS :inventory
@@ -264,35 +263,32 @@ router.get("/teachers", async (req, res) => {
             
             // increment remove field
             let mongoResults=[];
-
-
-       
-   
-           const result = await db.collection("teacher").find({$where: function() {
-               return this.name ="Ana"
-           }}).toArray(); 
-        
-
+           //  let result = await db.collection("teacher").find({}).toArray(); 
+           let result = await db.collection("teacher").find({"Name" :{$in:['smith','allen']}}).toArray(); 
          
+            // console.log("===========================");
+            // console.log(result);
+            // console.log("===========================");
+        
+            //  mongoResults = await db.collection("teacher").remove({"_id": "1"});
+            // const result = await db.collection("teacher").find({$where: function() {
+            //     return this.name ="Ana"
+            // }}).toArray(); 
 
-
-           // in array
+    // in array
             //const result = await db.collection("teacher").find({interests:'Running'}).toArray(); 
             //const result = await db.collection("teacher").find({interests:{ $all: ["Running"] } }).toArray(); 
             //const result = await db.collection("teacher").find({interests:{ $all: ["Running","yoga"] } }).toArray(); 
+            // const result = await db.collection("teacher").find({interests: { $size: 3 } }).toArray(); 
 
-           // const result = await db.collection("teacher").find({interests: { $size: 3 } }).toArray(); 
-
-            // array Of objects
+    // array Of objects
             //const result = await db.collection("teacher").find({extraHowers:{ $elemMatch: { $gte: 10, $lt: 20 } } }).toArray(); 
-           
-          
 
-            // child documents quering
+   // child documents quering
             //const result = await db.collection("teacher").find({"address.zipcode" :'92998-3874'}).toArray(); 
             //const result = await db.collection("teacher").find({"address.geo.lat" :'-68.6102'}).toArray(); 
-
-
+              
+       
             res.render('mongo',{
              //insertResult:insertResult ,
                 insertResult:mongoResults ,

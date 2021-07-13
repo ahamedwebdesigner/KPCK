@@ -6,3 +6,7 @@ express myExpressApp --view pug
 
 npm install mysql -s
 npm install mysql  --save 
+
+
+nodemon --exec npm start
+

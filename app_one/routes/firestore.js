@@ -23,14 +23,55 @@ const citiesRef = db.collection('cities');
 
 /* GET home page. */
 router.get('/',async function(req, res, next) {
+
+
+  console.log("--------------------");
+  console.log(setResult);
+  console.log("--------------------");
+
   res.render('index', { title: 'get all the details ' });
 });
 
 router.get('/create', async function(req, res, next) {
+
+  await citiesRef.doc('SF').set({
+    name: 'San Francisco', state: 'CA', country: 'USA',
+    capital: false, population: 860000
+  });
+
+  await citiesRef.doc('LA').set({
+    name: 'Los Angeles', state: 'CA', country: 'USA',
+    capital: false, population: 3900000
+  });
+  await citiesRef.doc('DC').set({
+    name: 'Washington, D.C.', state: null, country: 'USA',
+    capital: true, population: 680000
+  });
+  await citiesRef.doc('TOK').set({
+    name: 'Tokyo', state: null, country: 'Japan',
+    capital: true, population: 9000000
+  });
+  await citiesRef.doc('BJ').set({
+    name: 'Beijing', state: null, country: 'China',
+    capital: true, population: 21500000
+  });
+
   res.render('index', { title: 'working with firestore update' });
 });
 
 router.get('/read', async function(req, res, next) {
+
+
+  const cityRef = db.collection('cities').doc('SF');
+  const doc = await cityRef.get();
+  if (!doc.exists) {
+    console.log('No such document!');
+  } else {
+   
+    console.log('Document data:', doc.data());
+
+  }
+
   res.render('index', { title: 'working with firestore read' });
 });
 

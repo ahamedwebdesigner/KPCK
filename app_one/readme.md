@@ -27,3 +27,6 @@ npm i nodemon cors express firebase
 
 
 SET DEBUG=app-one:* & npm start
+
+
+npm outdated

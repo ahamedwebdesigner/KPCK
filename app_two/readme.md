@@ -33,3 +33,23 @@ CREATE TABLE `users` (
 npm install -g knex
 
 knex migrate:latest --help
+
+knex init
+
+knex migrate:latest
+knex migrate:latest --env production
+
+knex migrate:up
+knex migrate:up 20210724135530_add_quantity_to_products.js  
+
+knex migrate:rollback
+knex migrate:rollback --all
+
+
+
+knex migrate:make create_products
+knex migrate:make add_quantity_to_products
+knex migrate:make remove_category_from_products
+knex migrate:make index_product_price
+
+

@@ -10,9 +10,9 @@ let options = {
   "password": "123456789",
   "database": "app_two"
 }
-var mysql      = require('mysql');
-var connection = mysql.createConnection(options);
-connection.connect();
+// var mysql      = require('mysql');
+// var connection = mysql.createConnection(options);
+// connection.connect();
 
 
 const knex = require('knex')({

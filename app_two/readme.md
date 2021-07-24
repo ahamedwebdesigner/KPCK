@@ -25,3 +25,11 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+# working with migrations
+
+## 1)
+npm install -g knex
+
+knex migrate:latest --help

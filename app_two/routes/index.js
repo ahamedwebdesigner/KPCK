@@ -25,11 +25,13 @@ const knex = require('knex')({
   }});
 
 
+  const bookshelf = require('bookshelf')(knex)
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
  
   console.log("==========================#knex======================");
-  console.log(knex);
+  console.log(bookshelf);
   console.log("==========================#knex======================");
   res.render('index', { title: 'Express' });
 });

@@ -7,7 +7,8 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
-var firestore = require('./routes/firestore');
+// var firestore = require('./routes/firestore');
+var firestore = require('./routes/firebase');
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use(function(req, res, next) {
 });
 
 app.disable('etag');
+global._basedir = __dirname;
 
 
 // error handler

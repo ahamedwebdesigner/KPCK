@@ -2,9 +2,23 @@ var express = require('express');
 var router = express.Router();
 
 const firebase = require("firebase");
-const firestore = require("firebase/firestore");
+// const firestore = require("firebase/firestore");
+const {firestore, FieldValue} = require('firebase/firestore');
+
 const admin = require('firebase-admin');
-const app = admin.initializeApp();
+var serviceAccount = require("./../kdpvk-24195-firebase-adminsdk-x1r6l-eb56d47c92.json");
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+// admin.initializeApp({
+//   credential: admin.credential.applicationDefault(),
+//   databaseURL: 'https://<DATABASE_NAME>.firebaseio.com'
+// });
+
+admin.firestore.setLogFunction(console.log);
+
+
 
 var firebaseConfig = {
   apiKey: "AIzaSyCChBGLxm7e8TpLzATlcftPiJUGGA7hK-Q",
@@ -21,7 +35,7 @@ const db = firebase.firestore();
 
 const EmployeDbRef = db.collection("Employe");
 const citiesRef = db.collection('cities');
-
+const UsersRef = db.collection('Users');
 
 
 /* GET home page. */
@@ -32,107 +46,6 @@ router.get('/',async function(req, res, next) {
 
 router.get('/create', async function(req, res, next) {
 
-  /*
-  const data = {
-    name: 'Los Angeles',
-    state: 'CA',
-    country: 'USA'
-  };
-  
-  // Add a new document in collection "cities" with ID 'LA'
- await citiesRef.doc('LA').set(data);
-  */
-
-
-
-/*
-
- const results = await citiesRef.doc('ba').set({
-   capital: true
- }, { merge: true });
-
- */
-
-/*
-const data = {
-  stringExample: 'Hello, World!',
-  booleanExample: true,
-  numberExample: 3.14159265,
-  dateExample: new Date('December 10, 1815'),
-  arrayExample: [5, true, 'hello'],
-  nullExample: null,
-  objectExample: {
-    a: 5,
-    b: true
-  }
-};
-
-const results = await db.collection('dataDummy').doc('temp1').set(data);
-*/
-
-/*
-const results = await citiesRef.add({
-  name: 'Tokyo',
-  country: 'Japan'
-});
-console.log('Added document with ID: ', res.id);
-*/
-
-
-/*
-const newCityRef = citiesRef.doc('ATP');
-// Later...
-const results = await newCityRef.set({
-  name: 'Anantpur',
-  country: 'Japan'
-});
-
-console.log("-----------------");
-console.log(newCityRef);
-console.log(results);
-console.log("-----------------");
-
-*/
-/*
-// firestore: formating date
-
-//const time = admin.firestore.Timestamp.now();
-const data = {
-  stringExample: 'Hello, World!',
-  booleanExample: true,
-  numberExample: 3.14159265,
-  dateExample: firebase.firestore.Timestamp.fromDate(new Date('December 10, 1816')),
-  arrayExample: [5, true, 'hello'],
-  nullExample: null,
-  objectExample: {
-    ant: 5,
-    b: true
-  }
-};
-try {
-  const results = await db.collection('dataDummy').doc('temp4').set(data);
-} catch (error) {
-    console.log("-----------------");
-    console.log(error);
-    console.log("-----------------");
-}
-
-*/
-
-
-
-
-const data = {
-  created: firebase.firestore.Timestamp.now(),
- 
-};
-try {
-  const results = await db.collection('dataDummy').doc('temp5').set(data);
-} catch (error) {
-    console.log("-----------------");
-    console.log(error);
-    console.log("-----------------");
-}
 
 
 
@@ -146,6 +59,10 @@ router.get('/read', async function(req, res, next) {
 });
 
 router.get('/update',  async function(req, res, next) {
+
+  
+
+
   res.render('index', { title: 'working with firestore update' });
 });
 

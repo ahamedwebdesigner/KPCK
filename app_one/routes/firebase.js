@@ -10,7 +10,8 @@ var firebase = require('firebase/app');
                 require('firebase/database');
                 require('firebase/firestore');
                 require('firebase/analytics');
-                require('firebase/storage'); 
+                require('firebase/storage');
+const admin = require('firebase-admin');      
 
 var firebaseConfig = {
     apiKey: "AIzaSyCChBGLxm7e8TpLzATlcftPiJUGGA7hK-Q",
@@ -71,21 +72,32 @@ router.get('/',async function(req, res, next) {
     var result =[];
     try {
 
-     
-        // const snapshot = await  firestore.collection('cities').where('capital', '==', true).get();
-        // const snapshot = await  firestore.collection('cities').where('state', '>=', 'CA').where('state', '<=', 'IN').get();
-        // NOTE: below query requre composit index on state and population
-        // const snapshot = await  firestore.collection('cities').where('state', '==', 'CA').where('population', '>', 1000000).get();
-      
-        // if (snapshot.empty) { console.log('No matching documents.'); return; }  
-        // snapshot.forEach(doc => {console.log(doc.id, '=>', doc.data()); });
-        
-       /* Quering collection group query */
+        let documentRef = firestore.doc('students/001'); 
 
-        const querySnapshot = await firestore.collectionGroup('landmarks').where('type', '==', 'museum').get();
-        querySnapshot.forEach((doc) => {
-        console.log(doc.id, ' => ', doc.data());
-        });
+
+     
+        documentRef.update(
+            'stopts', firestore.FieldValue.arrayUnion('foo')   
+          ).then(() => {
+            return documentRef.get();
+          }).then(doc => {
+            
+                console.log("--------------working-------------");
+                console.error(doc)
+                console.log("-------------------------------");
+
+          });
+
+
+
+/*
+        var studentsRef = await firestore.collection("students");
+        studentsRef.doc("001").set({
+                stidemtID: 001,
+                stopts:['cricket','baseball']
+            });
+ */
+
 
 
           
@@ -209,6 +221,17 @@ landmarks.then((values) => {
     res.render('index', { title: 'cites database created ',data:result});
 });
   
+
+
+router.get('/temp-data', async function(req, res, next) {
+    var studentsRef = firestore.collection("students");
+    studentsRef.doc("001").set({
+            stidemtID: 001,
+            stopts:['cricket','baseball']
+        });
+        res.render('index', { title: 'student data created ',data:[]});
+});
+
 
 
 module.exports = router;

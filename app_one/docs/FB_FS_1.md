@@ -911,10 +911,105 @@ This query returns every city document where the region field is an array that c
 
 </pre>
 
+# working with where 
+
+<pre>
+
+        // const snapshot = await  firestore.collection('cities').where('capital', '==', true).get();
+        // const snapshot = await  firestore.collection('cities').where('state', '>=', 'CA').where('state', '<=', 'IN').get();
+        // NOTE: below query requre composit index on state and population
+        // const snapshot = await  firestore.collection('cities').where('state', '==', 'CA').where('population', '>', 1000000).get();
+      
+        // if (snapshot.empty) { console.log('No matching documents.'); return; }  
+        // snapshot.forEach(doc => {console.log(doc.id, '=>', doc.data()); });
+</pre>
 
 
-## list docuements
+## limit and limitToLast
+Creates and returns a new Query that only returns the last matching documents.
+You must specify at least one orderBy clause for limitToLast queries, otherwise an exception will be thrown during execution.
+
+<pre>
+        let query = firestore.collection('users').where('gender', '==', 'Male');
+
+            query.orderBy('first_name').limit(1).get().then(querySnapshot => {
+                querySnapshot.forEach(documentSnapshot => {
+                    console.log(`Last matching document is ${documentSnapshot.ref.path}`);
+                });
+            });
+
+               let query = firestore.collection('users').where('gender', '==', 'Male');
+
+        query.orderBy('first_name').get().then(querySnapshot => {
+            querySnapshot.forEach(documentSnapshot => {
+                console.log(`Last matching document is ${documentSnapshot.ref.path}`);
+            });
+        });
+
+            query.orderBy('first_name').limitToLast(1).get().then(querySnapshot => {
+                querySnapshot.forEach(documentSnapshot => {
+                    console.log(`Last matching document is ${documentSnapshot.ref.path}`);
+                });
+            });
+
+</pre>
 
 
+# listDocuments -Retrieves the list of documents in this collecti
+ToKnow
+
+
+# pagination endAt() startAt()
+<pre>
+        const querySnapshot = await firestore.collection('users')
+                                            .orderBy('first_name')
+                                            .startAt(1)
+                                            .get();
+          querySnapshot.forEach(documentSnapshot => {
+            console.log("--------------startAtRes-------------");
+            console.log(`Last matching document is ${documentSnapshot.ref.path}`);
+            console.log("-------------------------------");
+        });
+
+                
+        const querySnapshot = await firestore.collection('cities')
+                                            .orderBy('population')
+                                            .endAt(1000000)
+                                            .get();
+          querySnapshot.forEach(documentSnapshot => {
+            console.log("--------------startAtRes-------------");
+            console.log(`Last matching document is ${documentSnapshot.ref.path}`);
+            console.log("-------------------------------");
+        });
+
+ 
+
+</pre>
+
+# order by desending
+<pre>
+        const querySnapshot = await firestore.collection('cities')
+                                            .orderBy('population', 'desc')
+                                            .endAt(1000000)
+                                            .get();
+          querySnapshot.forEach(documentSnapshot => {
+            console.log("--------------startAtRes-------------");
+            console.log(`Last matching document is ${documentSnapshot.ref.path}`);
+            console.log("-------------------------------");
+        });
+
+</pre>
+
+# lemet
+<pre>
+     query.limit(3).get().then(querySnapshot => {
+                querySnapshot.forEach(documentSnapshot => {
+                    console.log("--------------startAtRes-------------");
+                    console.log(`Last matching document is ${documentSnapshot.ref.path}`);
+                    console.log("-------------------------------------");
+                });
+            });
+
+</pre>
 ## working i timestamp
       console.log( firebase.firestore.Timestamp.now());

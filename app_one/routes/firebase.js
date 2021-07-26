@@ -3,15 +3,14 @@ var router = express.Router();
 const {parse, stringify, toJSON, fromJSON} = require('flatted');
 // const firebase = require("firebase");
 
-const userData = require('./../users_data.json');
-
-var firebase = require('firebase/app');
-                require('firebase/auth');
-                require('firebase/database');
-                require('firebase/firestore');
-                require('firebase/analytics');
+var firebase = require('firebase/app')
+                require('firebase/auth')
+                require('firebase/functions')
+                require('firebase/database')
+                require('firebase/firestore')
+                require('firebase/analytics')
                 require('firebase/storage');
-const admin = require('firebase-admin');      
+    
 
 var firebaseConfig = {
     apiKey: "AIzaSyCChBGLxm7e8TpLzATlcftPiJUGGA7hK-Q",
@@ -25,7 +24,7 @@ var firebaseConfig = {
 
   firebase.initializeApp(firebaseConfig);
   var firestore = firebase.firestore();
-
+  const auth = firebase.auth()
 
 
 let loadTestData = async()=>{
@@ -69,36 +68,27 @@ let dropAllDocuments=async (collectionName)=>{
 
 /* GET home page. */
 router.get('/',async function(req, res, next) {
+
+    console.log("---------------------");
+    console.log( );
+    console.log("---------------------");
+    const arrayToUpdate = firebase.firestore.FieldValue.arrayUnion("one");
     var result =[];
     try {
 
+
+
+
         let documentRef = firestore.doc('students/001'); 
-
-
-     
         documentRef.update(
-            'stopts', firestore.FieldValue.arrayUnion('foo')   
+            'stidemtID', firebase.firestore.FieldValue.Increment(1)
           ).then(() => {
             return documentRef.get();
           }).then(doc => {
-            
                 console.log("--------------working-------------");
-                console.error(doc)
+                console.error(doc.data())
                 console.log("-------------------------------");
-
           });
-
-
-
-/*
-        var studentsRef = await firestore.collection("students");
-        studentsRef.doc("001").set({
-                stidemtID: 001,
-                stopts:['cricket','baseball']
-            });
- */
-
-
 
           
           //res.render('index', { title: 'working with firestore delet',data:{}}); if(!usersQuerySnapshot.empty){ 

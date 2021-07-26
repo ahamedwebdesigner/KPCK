@@ -8,7 +8,7 @@ module.exports = {
         host: '127.0.0.1',
         user: 'apptwo',
         password: '123456789',
-        database: 'app_two'
+        database: 'apptwo'
   },
   pool: {
     min: 2,

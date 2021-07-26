@@ -8,7 +8,7 @@ let options = {
   "port": 3306,
   "user":"apptwo",
   "password": "123456789",
-  "database": "app_two"
+  "database": "apptwo"
 }
 // var mysql      = require('mysql');
 // var connection = mysql.createConnection(options);
@@ -21,7 +21,7 @@ const knex = require('knex')({
       host: '127.0.0.1',
       user: 'apptwo',
       password: '123456789',
-      database: 'app_two'
+      database: 'apptwo'
   }});
 
 
@@ -46,17 +46,17 @@ router.get('/', function(req, res, next) {
     });
 */
 
-    new User().where('id', 1)
-		.destroy()
-		.catch(function (error) {
-			console.log(error);
-			res.send('An error occured');
-		});
+    // new User().where('id', 1)
+		// .destroy()
+		// .catch(function (error) {
+		// 	console.log(error);
+		// 	res.send('An error occured');
+		// });
     
   // console.log("==========================#knex======================");
   // console.log(bookshelf);
   // console.log("==========================#knex======================");
-  //res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Express' });
 });
 
 
@@ -104,7 +104,7 @@ router.get('/user-delet', function(req, res, next) {
 router.get('/user-details', function(req, res, next) {
 
 
-  new User().where('id', 4)
+  new User().where('id',1)
   .fetch()
   .then(function (user) {
     res.json(user);

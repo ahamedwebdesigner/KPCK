@@ -131,4 +131,4 @@ natural join
 	project p;
 
 
-
+SHOW CREATE TABLE users;

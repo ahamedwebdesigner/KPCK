@@ -41,3 +41,4 @@ knex migrate:make add_quantity_to_products
 knex migrate:make remove_category_from_products
 knex migrate:make index_product_price
 
+knex migrate:make create_users

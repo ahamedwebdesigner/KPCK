@@ -4,8 +4,8 @@ exports.up = function(knex) {
         t.increments().primary()
         t.string('title', 255).notNullable()
         t.string('description', 255).notNullable(),
-        t.integer('authorId',11).unsigned().notNullable();  
-        t.foreign('authorId').references('id').inTable('authors');
+        t.integer('author_id',11).unsigned().notNullable();  
+        t.foreign('author_id').references('id').inTable('authors');
     });
 };
 

@@ -2,19 +2,6 @@ var express = require('express');
 var router = express.Router();
 
 
-
-let options = {
-  "host": "localhost",
-  "port": 3306,
-  "user":"apptwo",
-  "password": "123456789",
-  "database": "apptwo"
-}
-// var mysql      = require('mysql');
-// var connection = mysql.createConnection(options);
-// connection.connect();
-
-
 const knex = require('knex')({
   client: 'mysql',
   connection: {
@@ -23,117 +10,41 @@ const knex = require('knex')({
       password: '123456789',
       database: 'apptwo'
   }});
-
-
   const bookshelf = require('bookshelf')(knex);
 
-  var User = bookshelf.Model.extend({
-    tableName: 'users'
+
+  module.exports = bookshelf.model('Author', {
+    tableName: 'author',
+    hasTimestamps: true,
+    // hidden: ['password','created_at'],
+    // visible: ['username', 'created_at'],
+    // idAttribute: 'AuthorID',
+    books() {
+      return this.hasMany('Books')
+    }
+  });
+
+  module.exports = bookshelf.model('Books', {
+    tableName: 'books',
+    author() {
+        return this.belongsTo(Author);
+    }
   });
 
 
+
+
+// Retrieving a previously registered model
+const Author = bookshelf.model('Author')
+const Book = bookshelf.model('Books')
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
- /*
-  new User()
-    .fetchAll()
-		.then(function (users) {
-			res.json(users);
-    })
-    .catch(function (error) {
-			console.log(error);
-			res.send('An error occured');
-    });
-*/
-
-    // new User().where('id', 1)
-		// .destroy()
-		// .catch(function (error) {
-		// 	console.log(error);
-		// 	res.send('An error occured');
-		// });
-    
-  // console.log("==========================#knex======================");
-  // console.log(bookshelf);
-  // console.log("==========================#knex======================");
+ 
   res.render('index', { title: 'Express' });
 });
 
 
-
-router.get('/user-create', function(req, res, next) {
-
-  new User({
-		username: "mustaq",
-		email:'mustaq@gmail.com',
-		name:"mushy",
-		age: '32',
-		location: 'Anantapur'
-  }).save()
-    .then(function (user) {
-      res.json(user);
-    }).catch(function (error) {
-      console.log(error);
-      res.send('An error occured');
-    });
- 
-  // res.render('index', { title: 'Express' });
-});
-
-
-
-/* GET home page. */
-router.get('/user-delet', function(req, res, next) {
-
-
-     new User().where('id', 3)
-     .destroy()
-     .then((data)=>{
-      res.send('user removed ');
-     })
-     .catch(function (error) {
-       console.log(error);
-       res.send('An error occured');
-     });
-     
-
- });
- 
-
-/* GET home page. */
-router.get('/user-details', function(req, res, next) {
-
-
-  new User().where('id',1)
-  .fetch()
-  .then(function (user) {
-    res.json(user);
-  }).catch(function (error) {
-    console.log(error);
-    res.send('An error occured');
-  });
- 
-  
-
-});
-
-
-/* GET home page. */
-router.get('/user-update', function(req, res, next) {
-
-
-  new User().where('id', 4).save('username', 'John Smith',{
-    method: 'update',
-    patch: true
-}).then((model) => {
-    res.json(user);
-  }).catch(function (error) {
-    console.log(error);
-    res.send('An error occured');
-  });
-  
-
-});
 
 
 

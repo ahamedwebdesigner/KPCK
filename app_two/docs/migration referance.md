@@ -42,3 +42,6 @@ knex migrate:make remove_category_from_products
 knex migrate:make index_product_price
 
 knex migrate:make create_users
+
+knex migrate:make create_authors_table
+knex migrate:make create_books_table

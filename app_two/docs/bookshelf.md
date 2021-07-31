@@ -52,7 +52,7 @@
 # storing both pk and fk record
 
 
-      Author.forge(formData)
+    Author.forge(formData)
     .save()
     .then((savedAuthor) =>{
               Book.forge({
@@ -84,4 +84,38 @@
               console.log(error);
     });
 
+# creating Forign key table record
 
+  // Author.forge({id:1})
+  //     .fetch({ withRelated:['book']})
+  //     .then((data)=>{
+  //         console.log(data.get('authorName'));
+  //         console.log(JSON.stringify(data));
+         
+  //       })
+  //       .catch(function (error) {
+  //         console.log(error);
+         
+  //       });
+
+
+
+
+  
+# fetching author(pk) along with book (fk)
+Author.forge({id:1})
+      .fetch({ withRelated:['book']})
+      .then((data)=>{
+          console.log(data.get('authorName'));
+          console.log(JSON.stringify(data));
+         })
+      .catch(function (error) {
+        console.log(error);
+      });
+Note: withrelated give modal name in small letters
+
+# fetching book (fk) along with author(pk) 
+  Book.forge({id:1})
+      .fetch({ withRelated:['author']})
+      .then((data)=>{console.log(JSON.stringify(data)) })
+      .catch(function (error) { console.log(error) });

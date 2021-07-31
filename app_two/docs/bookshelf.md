@@ -119,3 +119,6 @@ Note: withrelated give modal name in small letters
       .fetch({ withRelated:['author']})
       .then((data)=>{console.log(JSON.stringify(data)) })
       .catch(function (error) { console.log(error) });
+
+
+  

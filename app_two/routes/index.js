@@ -42,9 +42,16 @@ router.get('/', async function(req, res, next) {
  
 
 
+// try {
+//   let author = await new Author({authorName:'mustaq',email:'mustaq@gmail.com',password:"123456"}).save();
+//   console.log(author.toJSON())
+// } catch (error) {
+//     console.log("ERROR:"+error)
+// }
+
 
   try {
-    let  allGere = await Book.count();
+    let  allGere = await Author.count();
     // allGere.forEach(e=>console.log(e.toJSON()))
     console.log(allGere);
   } catch (error) {

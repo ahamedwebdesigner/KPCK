@@ -95,28 +95,46 @@ try {
   
 }
 */
-
+/*
 //3)
 
-
-
-  
   try {
     let ebook1 = await new Ebookmobi({id:2}).fetch({withRelated: ['genre']} );
     console.log(ebook1.toJSON());
   } catch (error) {
     console.log(error);
   }
-
-
+*/
+/*
+//4) fetching data form three tables
+try {
+  let ebook1 = await new Ebookmobi({id:2}).fetch({withRelated: ['genre','editions','chapters']} );
+  console.log(ebook1.toJSON());
+} catch (error) {
+  console.log(error);
+}
   
   res.render('index', { title: 'Express' });
 });
+*/
 
 
 
-
-
+try {
+  let ebook1 = await new Ebookmobi({id:1})
+                    .fetch({
+                      withRelated: ['genre',
+                      { editions: (query)=>query.orderBy('id','DESC')},
+                      { chapters: (query)=>query.orderBy('id','DESC')}
+                    ]
+                    } );
+  console.log(ebook1.toJSON());
+} catch (error) {
+  console.log(error);
+}
+  
+  res.render('index', { title: 'Express' });
+});
 
 
 

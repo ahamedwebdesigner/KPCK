@@ -1,9 +1,5 @@
 use apptwo;
 
-
-# edditon table fk
-
-
   
   CREATE TABLE`genre` (
 	`id`  INT NOT NULL AUTO_INCREMENT,
@@ -23,9 +19,8 @@ CREATE TABLE`ebook` (
      `genre_id`   INT NOT NULL,
          PRIMARY KEY ( `id` ),
 		KEY `genre_id` (`genre_id`),
-		CONSTRAINT `edition_ibfk_user` FOREIGN KEY (`genre_id`) REFERENCES `genre`(`id`)
-
- )  ENGINE=INNODB;
+		CONSTRAINT `edition_ibfk_genere` FOREIGN KEY (`genre_id`) REFERENCES `genre`(`id`)
+)  ENGINE=INNODB;
  
 insert  into `ebook`(`id`,`title`,`description`,`genre_id`) values 
 ('1','working with java','Learn java programin',1),
@@ -48,7 +43,7 @@ insert  into `editions`(`id`,`changes`,`ebook_id`) values
 
 CREATE TABLE`chapters` (
 	`id`  INT NOT NULL AUTO_INCREMENT,
-	`details` VARCHAR( 20 )  ,
+	`details` TEXT  ,
    `ebook_id`  INT NOT NULL ,
     KEY `ebook_id` (`ebook_id`),
 	CONSTRAINT `edition_ibfk_user_fke` FOREIGN KEY (`ebook_id`) REFERENCES `ebook` (`id`),

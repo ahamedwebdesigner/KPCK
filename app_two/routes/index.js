@@ -18,121 +18,36 @@ const knex = require('knex')({
   console.log( "----------------------------------------" );
 });
 
-
-let Genre = bookshelf.model('Genre', {
-  tableName: 'genre',
-  ebook() {
-    return this.hasMany('Ebook');
-  }
-});
-
-
-let Edition = bookshelf.model('Edition', {
-  tableName: 'editions',
-  ebook: function() {
-    return this.belongsTo('Ebook'); 
-  }
-});
-
-let Chapter = bookshelf.model('Chapter', {
-  tableName: 'chapters',
-  ebook: function() {
-    return this.belongsTo('Ebook');
-  }
-});
-
-let Ebook = bookshelf.model('Ebook', {
-  tableName: 'ebook',
-   editions: function() {
-    return this.hasMany('Edition');
-  },
-  chapters: function() {
-    return this.hasMany('Chapter');
-  },
-  genre: function() {
-    return this.belongsTo('Genre');
-  }
-});
-
-// restricted data usage create new model with hidden filds
-let Ebookmobi = bookshelf.model('Ebookmobi', {
-  tableName: 'ebook',
-  hidden: ['genre_id'],
-  //visible: ['title:', 'description:'],
-  editions: function() {
-    return this.hasMany('Edition');
-  },
-  chapters: function() {
-    return this.hasMany('Chapter');
-  },
-  genre: function() {
-    return this.belongsTo('Genre');
-  }
-});
-
   
+let Emp = bookshelf.model('Emp', {
+  tableName: 'employees',
+  offiece() {
+    return this.belongsTo('Offiece','officeCode','officeCode');  //regester model , //Foreign key in this model // Column in the `Target` model's table which `foreignKey`
+
+  }
+});
+  
+
+let Offiece = bookshelf.model('Offiece', {
+  tableName: 'offices',
+  emp() {
+    return this.hasMany('Emp')
+  }
+});
+
+
 /* GET home page. */
 router.get('/', async function(req, res, next) {
  
-  // all generous
-  /* 
   try {
-    let  allGere = await Genre.fetchAll({debug:true,require: true});  //debug=false
-   // console.log(allGere);//CollectionBase
-    // allGere.forEach(e=>console.log(e));//ModelBase
-    allGere.forEach(e=>console.log(e.toJSON()))
+    let  allEMp = await new Emp({ employeeNumber: 1621}).fetch(
+      {withRelated: ['offiece']}
+    );
+    console.log(allEMp.toJSON())
   } catch (error) {
-    
-  }
- */
-
- /*
-//2) fetching single record  
-try {
-  let ebook1 = await Ebook.where({id: 1}).fetch();
-  console.log(ebook1.toJSON());
-} catch (error) {
-  
+      console.log(error);
 }
-*/
-/*
-//3)
 
-  try {
-    let ebook1 = await new Ebookmobi({id:2}).fetch({withRelated: ['genre']} );
-    console.log(ebook1.toJSON());
-  } catch (error) {
-    console.log(error);
-  }
-*/
-/*
-//4) fetching data form three tables
-try {
-  let ebook1 = await new Ebookmobi({id:2}).fetch({withRelated: ['genre','editions','chapters']} );
-  console.log(ebook1.toJSON());
-} catch (error) {
-  console.log(error);
-}
-  
-  res.render('index', { title: 'Express' });
-});
-*/
-
-
-
-try {
-  let ebook1 = await new Ebookmobi({id:1})
-                    .fetch({
-                      withRelated: ['genre',
-                      { editions: (query)=>query.orderBy('id','DESC')},
-                      { chapters: (query)=>query.orderBy('id','DESC')}
-                    ]
-                    } );
-  console.log(ebook1.toJSON());
-} catch (error) {
-  console.log(error);
-}
-  
   res.render('index', { title: 'Express' });
 });
 

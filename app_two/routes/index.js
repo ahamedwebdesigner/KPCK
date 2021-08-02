@@ -18,11 +18,11 @@ const knex = require('knex')({
   console.log( "----------------------------------------" );
 });
 
-  
+// note offieces table contain officeCodeid  
 let Emp = bookshelf.model('Emp', {
   tableName: 'employees',
   offiece() {
-    return this.belongsTo('Offiece','officeCode','officeCode');  //regester model , //Foreign key in this model // Column in the `Target` model's table which `foreignKey`
+    return this.belongsTo('Offiece','officeCode','officeCodeid');  //regester model , //Foreign key in this model // Column in the `Target` model's table which `foreignKey`
 
   }
 });

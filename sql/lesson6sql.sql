@@ -72,7 +72,7 @@ insert  into `chapters`(`id`,`details`,`ebook_id`) values
 DROP TABLE IF EXISTS `offices`;
 
 CREATE TABLE `offices` (
-  `officeCode` varchar(10) NOT NULL,
+  `officeCodeid` varchar(10) NOT NULL,
   `city` varchar(50) NOT NULL,
   `phone` varchar(50) NOT NULL,
   `addressLine1` varchar(50) NOT NULL,
@@ -81,11 +81,11 @@ CREATE TABLE `offices` (
   `country` varchar(50) NOT NULL,
   `postalCode` varchar(15) NOT NULL,
   `territory` varchar(10) NOT NULL,
-  PRIMARY KEY (`officeCode`)
+  PRIMARY KEY (`officeCodeid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-insert  into `offices`(`officeCode`,`city`,`phone`,`addressLine1`,`addressLine2`,`state`,`country`,`postalCode`,`territory`) values 
+insert  into `offices`(`officeCodeid`,`city`,`phone`,`addressLine1`,`addressLine2`,`state`,`country`,`postalCode`,`territory`) values 
 
 ('1','San Francisco','+1 650 219 4782','100 Market Street','Suite 300','CA','USA','94080','NA'),
 
@@ -121,7 +121,7 @@ CREATE TABLE `employees` (
   KEY `reportsTo` (`reportsTo`),
   KEY `officeCode` (`officeCode`),
   CONSTRAINT `employees_ibfk_1` FOREIGN KEY (`reportsTo`) REFERENCES `employees` (`employeeNumber`),
-  CONSTRAINT `employees_ibfk_2` FOREIGN KEY (`officeCode`) REFERENCES `offices` (`officeCode`)
+  CONSTRAINT `employees_ibfk_2` FOREIGN KEY (`officeCode`) REFERENCES `offices` (`officeCodeid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `employees` */

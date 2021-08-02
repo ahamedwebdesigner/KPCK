@@ -27,6 +27,7 @@ let Emp = bookshelf.model('Emp', {
     return this.belongsTo('Offiece','officeCode','officeCodeid');  //regester model , //Foreign key in this model // Column in the `Target` model's table which `foreignKey`
 
   },
+  
   initialize() {
     this.on('fetched:collection', (collection) => {
         console.log( "--------------On events--------------------" );
@@ -48,7 +49,7 @@ let Emp = bookshelf.model('Emp', {
   // officeCodeid is present in offiece table 
 let Offiece = bookshelf.model('Offiece', {
   tableName: 'offices',
-  idAttribute : 'Offiece_id',
+  idAttribute : 'officeCodeid',
   emp() {
     return this.hasMany('Emp','officeCode','officeCodeid')
   }
@@ -58,6 +59,7 @@ let Offiece = bookshelf.model('Offiece', {
 
 let Customer = bookshelf.model('Customer', {
   tableName: 'customers',
+  idAttribute : 'customerNumber',
   emp() {
     return this.belongsTo('Emp','salesRepEmployeeNumber','employeeNumber')
   }
@@ -70,12 +72,31 @@ router.get('/', async function(req, res, next) {
   try {
     
 
-    let  allData = await Customer.collection().fetch();
+    // let  allData = await new Customer().fetchPage({pageSize: 3, page: 2});
+    // let  allData = await Customer.collection().fetch();
     // let  allData = await new  Customer().fetchAll();
     // let  allData = await new  Customer().fetch();  // get single modle
-    allData.forEach(e=>console.log(e.get('customerName')));
 
-//  console.log(allData.toJSON())
+    // let  allData = await Customer.collection()
+    //                   //.where('postalCode', '<>', '58339')
+
+    //                   //.where('postalCode', '=', '58339')
+    //                   //.where('postalCode', '58339')
+
+    //                   //.where('postalCode', '!=', '58339')
+    //                   // .where({postalCode: '94217', city: "Burlingame"})
+    //                   // .where('postalCode', '=', '58339')
+    //                   .andWhere('postalCode', '=', '58390')
+
+    //                   .fetch();
+
+    //allData = await Customer.query('where', 'postalCode', '=', '58339').fetch();
+    allData = await Customer.query('where', 'city', '=', 'Newark').fetchAll({withRelated: ['emp']});
+
+
+    //allData.forEach(e=>console.log(e.get('contactLastName')));
+    console.log(allData.toJSON());
+
   } catch (error) {
     console.log('---------------error-----------------')
     console.log(error)

@@ -356,6 +356,10 @@ const Author = bookshelf.model('Author')
    
     ]);
 
+
+//  let resp = await authorsCollection.invokeThen('save');
+//console.log(resp);
+
 // user promis to invoke bulk save
     Promise.all(authorsCollection.invokeThen('save')).then(function(result ) {
         result.forEach(e=>console.log(e.toJSON()))
@@ -381,6 +385,19 @@ with out using new operator
         });
 </pre>
 
+
+# deleting dependent modlels
+<pre>
+let autho = await new Author({id:40}).fetch({
+  withRelated:['book']
+});
+
+Promise.all(autho.related('book').invokeThen('destroy')).then(function(result ) {
+  result.forEach(e=>console.log(e.toJSON()))
+});
+
+
+</pre>
 # QUERING DATA from tables
 getting multiple records
 
@@ -778,6 +795,46 @@ quering with joins
     }
     
 </pre>
-<pre></pre>
-<pre></pre>
-<pre></pre>
+
+# advance quering
+
+<pre>
+try {
+  
+  let  allData = await new Emp().query((q)=>{
+    q.innerJoin('offices', 'officeCodeid', 'officeCode')
+    //q.where('city','=','Boston')
+    // q.where('firstName','=','Diane')
+    q.where('employees.firstName','=','Diane')
+   
+    // q.innerJoin('customers', 'customersId', 'customers')
+  // }).fetch({columns:['employeeNumber', 'lastName','offices.officeCodeid'],withRelated: ['offiece']});
+  }).fetch({withRelated: ['offiece']});
+  console.log(allData.toJSON());
+
+
+} catch (error) {
+  console.log(error)
+}
+  
+
+</pre>
+
+
+<pre>
+
+  let  allData = await new Offiece().query((q)=>{
+    q.innerJoin('employees','officeCode', 'officeCodeid' )
+    q.where('city','=','Boston')
+    
+  
+  }).fetch({withRelated: [{
+    'emp':(qr)=>{qr.orderBy('employeeNumber','desc')}
+  }]});
+  console.log(allData.toJSON());
+
+} catch (error) {
+  console.log(error)
+}
+  
+</pre>

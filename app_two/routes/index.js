@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 const PDFDocument = require('pdfkit');
-
-
 var Promise = require('bluebird');
 
 const knex = require('knex')({
@@ -71,6 +69,8 @@ let Customer = bookshelf.model('Customer', {
 });
 
 
+
+
 module.exports = bookshelf.model('Author', {
   tableName: 'authors',
   book() {
@@ -93,8 +93,20 @@ const Book = bookshelf.model('Book')
 /* GET home page. */
 router.get('/', async function(req, res, next) {
 
-
+try {
   
+
+  // let  allData = await new Emp().query((q)=>{
+  //   q.innerJoin('offices', 'officeCodeid', 'officeCode')
+  //   //q.where('city','=','Boston')
+  //   // q.where('firstName','=','Diane')
+  //   q.where('employees.firstName','=','Diane')
+   
+  //   // q.innerJoin('customers', 'customersId', 'customers')
+  // // }).fetch({columns:['employeeNumber', 'lastName','offices.officeCodeid'],withRelated: ['offiece']});
+  // }).fetch({withRelated: ['offiece']});
+  // console.log(allData.toJSON());
+
 
   res.send("working with bookshelf ");
 });

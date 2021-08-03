@@ -45,3 +45,17 @@ knex migrate:make create_users
 
 knex migrate:make create_authors_table
 knex migrate:make create_books_table
+
+
+module.exports = {
+    up: (knex, Promise) =>{
+        return knex.schema.createTableIfNotExists("users", function(table){
+            table.increments();
+            table.string("name");
+        });
+    },
+    down: (knex, Promise) =>{
+        return knex.schema.dropTableIfExists("users")
+    }
+};
+ 

@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
+const PDFDocument = require('pdfkit');
 
+
+var Promise = require('bluebird');
 
 const knex = require('knex')({
   client: 'mysql',
@@ -11,6 +14,8 @@ const knex = require('knex')({
       database: 'apptwo'
   }});
  const bookshelf = require('bookshelf')(knex);
+
+
 
  knex.on( 'query', function( queryData ) {
   console.log( "--------------Query data--------------------" );
@@ -66,45 +71,35 @@ let Customer = bookshelf.model('Customer', {
 });
 
 
+module.exports = bookshelf.model('Author', {
+  tableName: 'authors',
+  book() {
+    return this.hasMany('Book')
+  }
+});
+
+module.exports = bookshelf.model('Book', {
+  tableName: 'books',
+  author() {
+      return this.belongsTo("Author");
+  }
+});
+
+// Retrieving a previously registered model
+const Author = bookshelf.model('Author')
+const Book = bookshelf.model('Book')
+
+
 /* GET home page. */
 router.get('/', async function(req, res, next) {
 
-  try {
-    
 
-    // let  allData = await new Customer().fetchPage({pageSize: 3, page: 2});
-    // let  allData = await Customer.collection().fetch();
-    // let  allData = await new  Customer().fetchAll();
-    // let  allData = await new  Customer().fetch();  // get single modle
-
-    // let  allData = await Customer.collection()
-    //                   //.where('postalCode', '<>', '58339')
-
-    //                   //.where('postalCode', '=', '58339')
-    //                   //.where('postalCode', '58339')
-
-    //                   //.where('postalCode', '!=', '58339')
-    //                   // .where({postalCode: '94217', city: "Burlingame"})
-    //                   // .where('postalCode', '=', '58339')
-    //                   .andWhere('postalCode', '=', '58390')
-
-    //                   .fetch();
-
-    //allData = await Customer.query('where', 'postalCode', '=', '58339').fetch();
-    allData = await Customer.query('where', 'city', '=', 'Newark').fetchAll({withRelated: ['emp']});
-
-
-    //allData.forEach(e=>console.log(e.get('contactLastName')));
-    console.log(allData.toJSON());
-
-  } catch (error) {
-    console.log('---------------error-----------------')
-    console.log(error)
-    console.log('---------------error-----------------')
-  }
+  
 
   res.send("working with bookshelf ");
 });
+
+
 
 
 router.get('/connection-test', function(req, res, next) {
@@ -116,5 +111,55 @@ router.get('/connection-test', function(req, res, next) {
     res.send("Data base  connected: OK") 
   });  
 });
+
+
+
+
+
+router.get('/gen-pdf', function(req, res, next) {
+  const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in suscipit purus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus nec hendrerit felis. Morbi aliquam facilisis risus eu lacinia. Sed eu leo in turpis fringilla hendrerit. Ut nec accumsan nisl. Suspendisse rhoncus nisl posuere tortor tempus et dapibus elit porta. Cras leo neque, elementum a rhoncus ut, vestibulum non nibh. Phasellus pretium justo turpis. Etiam vulputate, odio vitae tincidunt ultricies, eros odio dapibus nisi, ut tincidunt lacus arcu eu elit. Aenean velit erat, vehicula eget lacinia ut, dignissim non tellus. Aliquam nec lacus mi, sed vestibulum nunc. Suspendisse potenti. Curabitur vitae sem turpis. Vestibulum sed neque eget dolor dapibus porttitor at sit amet sem. Fusce a turpis lorem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;';
+
+
+
+  //var myDoc = new PDFDocument({bufferPages: true,userPassword :'123456'});
+  var myDoc = new PDFDocument({bufferPages: true});
+  let buffers = [];
+  myDoc.on('data', buffers.push.bind(buffers));
+  myDoc.on('end', () => {
+      let pdfData = Buffer.concat(buffers);
+      res.writeHead(200, {
+      'Content-Length': Buffer.byteLength(pdfData),
+      'Content-Type': 'application/pdf',
+      'Content-disposition': 'attachment;filename=test.pdf',})
+      .end(pdfData);
+  });
+
+  myDoc.font('Times-Roman')
+  .fontSize(12)
+  .text(`this is a test text`);
+  myDoc.text('Hello world!', 100, 100)
+  myDoc.moveTo(0, 20)                               // set the current point
+   .lineTo(100, 160)                            // draw a line
+   .quadraticCurveTo(130, 200, 150, 120)        // draw a quadratic curve
+   .bezierCurveTo(190, -40, 200, 200, 300, 150) // draw a bezier curve
+   .lineTo(400, 90)                             // draw another line
+   .stroke();   
+
+   myDoc.text(lorem, {
+    columns: 3,
+    columnGap: 15,
+    height: 100,
+    width: 465,
+    align: 'justify'
+  });
+  
+  myDoc.image('D:/_teachingBox/arshiya/KPVK/app_two/docs/bookschema.png', 10, 200, {fit: [600, 300]})
+   
+  myDoc.end();
+
+
+});
+
+
 module.exports = router;
 

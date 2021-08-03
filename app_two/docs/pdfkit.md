@@ -1,0 +1,4 @@
+pdfkit
+
+http://pdfkit.org/docs/images.html
+https://www.npmjs.com/package/pdfkit

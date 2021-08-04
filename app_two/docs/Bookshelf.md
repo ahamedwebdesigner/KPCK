@@ -838,3 +838,141 @@ try {
 }
   
 </pre>
+
+
+
+# fetching multiple values
+<pre>
+  try {
+
+new Book({id: 1).fetch()
+
+ Book.where({id: 1}).fetch()
+ 
+  // Book.fetchAll()
+  //Book.where({id: 1}).fetch()
+  // Book.collection().fetch()
+
+
+    // let  allData = await Emp.collection().fetch();
+    // let  allData = await Emp.collection().fetchOne();
+    let  allData = await Emp.collection()
+    .where({officeCode: '6', reportsTo: 1088})
+    .orderBy('employeeNumber', 'ASC')
+    .fetch();
+    // console.log(allData);
+ allData.forEach(e=>console.log(e.toJSON()));
+
+  }catch (error) {
+  console.log(error);
+}
+
+
+  res.render('index', { title: 'Express' });
+});
+</pre>
+
+
+# defining default values
+we can define default valuse 
+
+<pre>
+var MyModel = bookshelf.model('MyModel', {
+  defaults: {property1: 'foo', property2: 'bar'},
+  tableName: 'my_models'
+})
+
+MyModel.forge({property1: 'blah'}).save().then(function(model) {
+  // {property1: 'blah', property2: 'bar'}
+})
+
+
+</pre>
+
+# storing date
+<pre>
+myModel.save({created_at: new Date(2015, 5, 2)}).then(function(updatedModel) {
+</pre>
+
+
+# hidden fiilds and visibles
+<pre>
+const MyModel = bookshelf.model('MyModel', {
+  tableName: 'my_models',
+  hidden: ['password']
+   idAttribute: 'coolId',
+    requireFetch: false, // null when data is not present 
+	 visible: ['name', 'created_at']
+})
+</pre>
+
+
+### counting using where clause
+<pre>
+new Duck().where('color', 'blue').count('name').then((count) => {
+  console.log('number of blue ducks', count)
+})
+</pre>
+
+### fetching all the data and load child data to the first element
+
+<pre>
+new Posts().fetch().then(function(collection) {
+  return collection.at(0).load(['author', 'content', 'comments.tags'])
+}).then(function(model) {
+  JSON.stringify(model)
+</pre>
+
+### quering child recard
+
+<pre>
+  // Using an object with query callbacks to filter the relations
+new Posts().fetch().then(function(collection) {
+  return collection.at(0).load({comments: function(qb) {
+    qb.where('comments.is_approved', '=', true)
+  }})
+}).then(function(model) {
+  JSON.stringify(model)
+  // the model now includes all approved comments
+})
+
+</pre>
+
+### clear
+<pre>
+    try {
+    let book1 = await Book.where({id: 1}).fetch();
+    console.log(book1.get('title'));
+    book1.clear();
+    console.log(book1.get('title'));
+    } catch (error) {
+    
+    }
+
+</pre>
+
+
+#clone the bodel
+<pre>
+  try {
+    let book1 = await Book.where({id: 1}).fetch();
+    let book2 = book1.clone();
+    console.log(book1.get('title'));
+    book1.clear();
+    console.log(book1.get('title'));
+    console.log(book2.get('title'));
+  } catch (error) {
+    
+  }
+</pre>
+
+
+# hdiding fields
+<pre>
+const MyModel = bookshelf.model('MyModel', {
+  tableName: 'my_models',
+  hidden: ['password']
+})
+</pre>
+
+

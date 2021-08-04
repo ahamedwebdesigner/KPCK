@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const PDFDocument = require('pdfkit');
 var Promise = require('bluebird');
+const Joi = require('joi');
 
 const knex = require('knex')({
   client: 'mysql',
@@ -11,10 +12,12 @@ const knex = require('knex')({
       password: '123456789',
       database: 'apptwo'
   }});
- const bookshelf = require('bookshelf')(knex);
+const bookshelf = require('bookshelf')(knex);
+bookshelf.plugin(require('bookshelf-joi'), {
+  joi: {  abortEarly: true},
+});
 
-
-
+//npm uninstall bookshelf-joi-validator
  knex.on( 'query', function( queryData ) {
   console.log( "--------------Query data--------------------" );
   console.log( queryData.bindings);
@@ -75,7 +78,15 @@ module.exports = bookshelf.model('Author', {
   tableName: 'authors',
   book() {
     return this.hasMany('Book')
+  },
+  buildValidation(model, attrs, options) {
+    return {
+      authorName: Joi.string().required(),
+      email: Joi.string().optional(),
+      password: Joi.string().optional(),
+    };
   }
+  
 });
 
 module.exports = bookshelf.model('Book', {
@@ -93,7 +104,33 @@ const Book = bookshelf.model('Book')
 /* GET home page. */
 router.get('/', async function(req, res, next) {
 
-try {
+
+
+
+
+  // var AuthorModal = Author.forge(authodData).save().then(
+  //   function(savedModel) {
+  //     console.log(savedModel);
+  //   }).catch(function (error) {
+  //     console.log("-------------------error----------------");
+  //       console.log(error);
+  //     console.log("-------------------error----------------");
+  //  });
+   
+
+  try {
+    let authodData = {
+      authorName: '',
+      email:'arshiya@gmail.com',
+      password:'arshiya@12'
+    }
+    var AuthorModal = await Author.forge(authodData).save().then();
+
+  } catch (error) {
+    console.log(error)  
+  }
+
+// try {
   
 
   // let  allData = await new Emp().query((q)=>{

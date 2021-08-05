@@ -14,7 +14,7 @@ const knex = require('knex')({
   }});
 const bookshelf = require('bookshelf')(knex);
 bookshelf.plugin(require('bookshelf-joi'), {
-  joi: {  abortEarly: true},
+  joi: {  abortEarly: false},
 });
 
 //npm uninstall bookshelf-joi-validator
@@ -76,17 +76,20 @@ let Customer = bookshelf.model('Customer', {
 
 module.exports = bookshelf.model('Author', {
   tableName: 'authors',
+
+
   book() {
     return this.hasMany('Book')
   },
+
+
   buildValidation(model, attrs, options) {
     return {
       authorName: Joi.string().required(),
-      email: Joi.string().optional(),
+      email:Joi.string().required(),
       password: Joi.string().optional(),
     };
   }
-  
 });
 
 module.exports = bookshelf.model('Book', {
@@ -106,46 +109,20 @@ router.get('/', async function(req, res, next) {
 
 
 
-
-
-  // var AuthorModal = Author.forge(authodData).save().then(
-  //   function(savedModel) {
-  //     console.log(savedModel);
-  //   }).catch(function (error) {
-  //     console.log("-------------------error----------------");
-  //       console.log(error);
-  //     console.log("-------------------error----------------");
-  //  });
-   
-
   try {
     let authodData = {
       authorName: '',
-      email:'arshiya@gmail.com',
+      email:'',
       password:'arshiya@12'
     }
     var AuthorModal = await Author.forge(authodData).save().then();
+   } catch (error) {
+     res.json(error.details)
 
-  } catch (error) {
-    console.log(error)  
   }
 
-// try {
-  
 
-  // let  allData = await new Emp().query((q)=>{
-  //   q.innerJoin('offices', 'officeCodeid', 'officeCode')
-  //   //q.where('city','=','Boston')
-  //   // q.where('firstName','=','Diane')
-  //   q.where('employees.firstName','=','Diane')
-   
-  //   // q.innerJoin('customers', 'customersId', 'customers')
-  // // }).fetch({columns:['employeeNumber', 'lastName','offices.officeCodeid'],withRelated: ['offiece']});
-  // }).fetch({withRelated: ['offiece']});
-  // console.log(allData.toJSON());
-
-
-  res.send("working with bookshelf ");
+  //res.send("working with bookshelf ");
 });
 
 
